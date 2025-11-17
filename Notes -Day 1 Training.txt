@@ -1,0 +1,275 @@
+Notes :  17/11/25: Day 1: Java FSD
+
+Git:
+
+Commands:
+
+git config --global user.name "Vageeshs004"
+
+git config --global user.email "vageesh.smd@gmail.com"
+
+git init
+
+git remote add origin "that link from GitHub"
+
+git commit -m "that msg"
+
+
+git branch
+
+git status... if it is on master and u want to change to main,
+give   git branch -M main  (or)  git checkout main
+
+
+git 
+
+
+
+
+
+
+
+
+
+
+
+Concept 3 :  create another branch and push that also
+
+git branch 
+
+
+When collaborative projects we do, 
+
+
+
+
+when we delete a branch in cmd 
+
+
+
+
+Ruleset rules we should for merge: change something mentioned..then only we can merge to main
+
+
+
+Here, create a new branch..  
+
+git checkout -b vageesh-branch (it checkouts from the old branch and creates a new branch called vageesh-branch)
+
+git add Clone.txt
+
+git commit -m "new branch"
+
+git branch
+
+git push origin vageesh-branch
+
+
+then, one pop-up will show.. give pull and merge request... then give pull request.. add comments..then merge request..then commit
+
+then it will be  updated in Clone.txt
+
+
+
+To delete that branch, mam told, first delete in GitHub website.. then do on local or else it won't be deleted as it is active
+
+but, we can do in terminal itself
+
+give  git checkout main (active branch goes to main ) - mam told create a new branch and then delete the vageesh-branch
+
+but, we can go to main branch itself..   then (git pull origin main) - i don't know why it is for
+
+
+
+then give, git branch -d vageesh-branch
+
+git push origin --delete vageesh-branch
+
+
+
+
+Concept 4 : Collaborative repository:
+
+the owner adds other members
+
+
+you clone the repository that owner added you and add a file onto it and push it
+
+then, the owner changes in Branches.... activate... set target as default... select pull request before merging.. and increase the count to something...then save..
+
+then , also, owner adds some other things...in branches..
+
+
+
+
+
+-------------------------Database and SQL--------------------
+
+RDBMS:  we are managing 2 or 3 tables having relations using structured query language... so it is called Relational Data base
+
+Flat-file - simple csv file or excel file
+
+
+Hierarchial model
+
+Xml model 
+
+2 ways to transfer data over network - json and xml
+
+
+
+Components of RDBMS:
+
+
+2. Softwares
+
+3. Data
+
+4. Users - DBA, devolopers, end users
+
+5. Procedures
+
+
+
+
+
+3.Levels of DBMS Architecture:
+
+External level - user view
+
+Conceptual level - logical schema
+
+Internal level - Physical storage 
+
+Hardware side..
+
+we require only conceptual and external level.
+
+
+
+
+
+5.Procedures - we don't bother this
+
+6. SQL
+
+
+
+
+Normalization: 
+
+MySQL Workbench:  
+
+
+show databases;
+
+create database demo;
+
+use demo;
+create table employee (empid numeric(15), empname varchar(50), designation varchar(50), 
+mobile varchar(10), address varchar(30),salary numeric(10));
+
+show tables;
+
+desc employee;
+
+insert into employee values(123,'Vageesh','Java','7010577421', 'Trichy',40000);
+select * from employee;
+
+
+Primary key and Unique key difeerences:
+
+Primary key cannot be null , unique key can be null
+
+There may be many unique keys but there will be only one primary key
+
+
+
+
+
+alter table employee add constraint pk primary key (empid);  // error will come when there is redundant data.. it will say pk will not be able to make when redundant data is there..
+
+
+so, give
+
+delete from employee where empid=123;
+
+set SQL_SAFE_UPDATES=0;
+
+
+
+DML and DDL: DML - insert, update,delete etc.
+
+
+
+First Normal Form:
+
+
+Second normal form: No Partial dependencies
+
+
+
+First normal form:  If some columns are there in table and if one columns has may values, like 2 or 3 phone numbers, then, we separately write the data with one phone number and other phone no separately..
+
+single table row 
+
+
+
+Primary key:
+Foreign key:
+Composite key:
+Candidate key:
+
+Unique key:
+
+Super key:
+Surrogate key:
+
+Alternative key:
+
+
+
+Question: Create a student table with student Id, Course Id, studname coursename 
+
+
+
+Second normal Form: No Partial dependency on composite key
+
+Write Course table separately, student table separately, then comined one table with composite primary keys..
+
+
+Composite key: 2 attributes or more combinely form a primary key... not a single attribute can define the row uniquely..
+
+Alternate key: other than primary key, the other columns that will uniquely identify the rows are called Alternate key...
+
+
+Candidate key: primary key + alternate key
+
+Super key: Super set of all keys.
+
+like name alone
+name + email
+name + phone number
+
+It is like power set of all subsets
+
+
+
+
+
+
+How to add a folder in GitHub:
+
+We can't add directly.. go on add new file search button , give nov17/ 
+
+when we give slash, new folder will be created
+
+
+then add the homework files of the day on your repo
+
+
+
+
+
+
+
