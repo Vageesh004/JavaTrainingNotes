@@ -269,6 +269,27 @@ then add the homework files of the day on your repo
 
 
 
+create table Student (studid numeric,courseid numeric, studname varchar(15), coursename varchar(20));
+
+alter table student add column marks numeric;
+
+insert into student values (123,1,'swapna','java',90);
+insert into student values (123,2,'swapna','spring',90);
+insert into student values (124,1,'swapna','java',90);
+
+insert into student values (125,1,'swathi','java',95);
+
+alter table student add constraint spk primary key (studid,courseid);
+
+create table student_2nf (studid numeric,studname varchar(15));
+alter table student_2nf add constraint spk2nf primary key(studid);
+
+create table course_2nf (course numeric primary key, coursename varchar(10));
+alter table course_2nf add constraint spk2nf primary key(courseid);
+
+create table student_course_2nf (studid numeric, courseid numeric, marks numeric, primary key(studid,courseid));
+
+
 
 
 
