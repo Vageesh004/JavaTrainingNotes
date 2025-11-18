@@ -1,0 +1,103 @@
+18/11/25:  Java Training Notes Day 2:
+
+
+3 rd Normal Form :
+
+The non-key attribute should not depend on another non-key attribute... 
+we should remove the transitive dependencies..
+
+
+Student(StudentId,Studentname, DeptId)
+
+Course(CourseId, Coursename)
+
+Department(DeptId, DeptName)
+
+StudentCourse(StudentId, CourseId)
+
+
+ACID Properties: we do Normalization to achieve ACID Properties
+
+In this example, StudentId, CourseId both are composite keys.
+
+DeptId is a non-key dependent on StudentId
+
+Deptname is dependent on deptId.. here both are non-keys.. so transitive dependency is there here..
+
+we should remove that transitive dependency
+
+
+
+
+Super Key: It is a set of all combinations which shows the attribute uniquely.. like primary key + alternate key,
+primary key + candidate key etc.
+
+
+For the above example, mam is saying, DeptId should be in CourseId not in Student Id.. bcoz the student can study many department courses like cse student studying ece also...
+
+so, mam said deptId should be in course table. she said this to maintain it in 1 NF.. or else, more dept id will come and it will not be in 1 NF
+
+But, one person said, only one dept he belongs right, so can we keep in Student table or in both table
+
+
+Pranay said, we can keep an Attribute Stream Id in the Student Table( The main department 
+
+
+
+
+
+Example: 
+
+Topics: 
+
+DDL : Create, drop, alter
+
+DML : Insert, update, delete
+
+TCL : Commit, Rollback, savepoint
+
+DCL : Grant and Revoke
+
+
+Constraints
+
+
+
+DDL and DML commands:
+
+
+DML: over the data , but not change the structure... DDL define the structure..
+
+
+------------DDL Commands----------------------
+
+Create: 
+
+-- Create a new user
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+
+-- Grant all privileges to the user on all databases
+GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' WITH GRANT OPTION;
+
+-- Apply changes
+FLUSH PRIVILEGES;
+
+
+Then, close and open MySQL workbench again, give + symbol again and give name 'virat' in 2 places, places where root is there...  then, give the password you gave in the query 
+
+
+
+Grant and Revoke:  
+
+Changing a new user
+
+
+Create a new user
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+
+-- Grant all privileges to the user on all databases
+GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' WITH GRANT OPTION;
+
+-- Apply changes
+FLUSH PRIVILEGES;
+
