@@ -24,7 +24,9 @@ give   git branch -M main  (or)  git checkout main
 git 
 
 
+Concept 2 : Cloning 
 
+do git init and then clone the repository by copy pasting that https kink from github code button
 
 
 
@@ -288,6 +290,7 @@ create table course_2nf (course numeric primary key, coursename varchar(10));
 alter table course_2nf add constraint spk2nf primary key(courseid);
 
 create table student_course_2nf (studid numeric, courseid numeric, marks numeric, primary key(studid,courseid));
+
 
 
 
