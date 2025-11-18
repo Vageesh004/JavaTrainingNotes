@@ -101,3 +101,207 @@ GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' WITH GRANT OPTION;
 -- Apply changes
 FLUSH PRIVILEGES;
 
+
+
+
+TCL Commands:
+
+Commit, Savepoint, Rollback
+
+set sql-safe-updates=0...  0 means update and delete cannot be do
+
+
+
+Foreign key syntax writing in the classicmodel database:
+
+create table customers customerId, SalesRepEmpNo references Emplyees(Empid) ----> something like this
+
+
+
+
+1. create 
+2. DML commands- alter , extra modify, change
+
+3. TCL
+
+4. 4 tables interconnection..
+
+Officecode from Office Table, link with employees table
+
+Customernumber 
+
+
+
+
+
+----------Functions in SQL---------------------
+
+
+
+use classicmodels;
+
+desc payments;
+desc customers;
+desc employees;
+
+select salesRepEmployeeNumber from customers;
+select EmployeeNumber from employees;
+
+show databases;
+create database vageesh;
+
+
+select length('vageesh');
+select upper('vageesh');
+select lower('vageesh');
+select trim('    vageesh  ');
+
+select length(trim('    vageesh  '));
+
+select replace('SQL Database','SQL','MySQL');
+select length(trim('    swapna   '));
+select length(rtrim('    swapna   '));
+
+select length(rtrim('    swapna.    '));
+
+select substr('sql database',4,7);
+
+select empname,upper(empname) as up_empname from emptable;
+
+select * from emptable;
+
+use vageesh;
+
+
+create table student_tab(firstname varchar(15), lastname varchar(10),stdid int primary key,marks double);
+
+select * from student_tab;
+
+insert into student_tab(firstname,lastname,stdid, marks) values
+('swapna','motupally',123,90),
+('rohit','sharma',125,90),
+('virat','kohli',115,80),
+('MS','dhoni',120,85);
+
+select * from student_tab;
+
+select concat(firstname,' ',lastname) as fullname from student_tab;
+
+select empname.left(empname,3) as domain_name from emptable;
+
+select email, instr(email,'@')as interval from emptable;
+
+select firstname, reverse(firstname) as rev_firstname from student_tab;
+
+select firstname, lpad(firstname,15,'*') as pad_firstname from student_tab;
+
+select abs(-9000);
+select round(34.6);
+select floor(34.9);
+select mod(23,3);
+
+select power(5,4);
+
+select sign(0);
+select sqrt(144);
+
+select truncate(67.89543,2);
+select truncate(rand(),4);
+
+select round(rand() * 10000);
+
+select now();
+select curdate();
+
+select dayname('2025-11-18');
+
+select date(now());
+select time(now());
+select year(now());
+
+select year('2020-08-23');
+
+select marks,if(marks>35,'PASS','FAIL')as result from student_tab;
+
+select firstname,marks,
+case when marks>60 then 'A'
+when marks<60 and marks>=50 then 'B'
+when marks<50 and marks>=40 then 'c'
+else 'FAIL'
+end as grade from student_tab;
+
+select cast('45678' as unsigned);
+select convert('2025/11/18',date) as currentdate;
+
+select group_concat(firstname) as studname_list from student_tab;
+
+
+
+
+
+
+
+CREATE DATABASE IF NOT EXISTS bankdb;
+
+-- Switch to it
+USE bankdb;
+
+-- Create a table (ensure InnoDB for transactions)
+CREATE TABLE IF NOT EXISTS accounts (
+  account_id INT AUTO_INCREMENT PRIMARY KEY,
+  customer   VARCHAR(100) NOT NULL,
+  balance    DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+  CONSTRAINT chk_balance_nonneg CHECK (balance >= 0)  -- MySQL 8.0+ enforces CHECK
+) ENGINE=InnoDB;
+
+-- Seed data
+INSERT INTO accounts (customer, balance)
+VALUES ('Alice', 1000.00),
+       ('Bob',    500.00)
+ON DUPLICATE KEY UPDATE balance = VALUES(balance); -- if rerun, refresh balances
+
+
+
+START TRANSACTION;  -- or BEGIN;
+
+-- Example: transfer 200 from Alice to Bob
+-- Guard against overdraft
+UPDATE accounts
+SET balance = balance - 200
+WHERE customer = 'Alice' AND balance >= 200;
+
+set sql_safe_updates=0;
+-- Verify the row was affected; if not, rollback
+-- (If you're in a client without procedural logic, you can inspect ROW_COUNT())
+-- SELECT ROW_COUNT(); -- should be 1
+
+UPDATE accounts
+SET balance = balance + 200
+WHERE customer = 'Bob';
+
+COMMIT;  -- Makes both updates permanent
+
+
+
+start transaction;
+UPDATE accounts SET balance = balance - 300 WHERE customer = 'Alice' AND balance >= 300;
+
+SAVEPOINT after_alice;
+
+-- Step 2 (decide to undo this part)
+UPDATE accounts SET balance = balance + 300 WHERE customer = 'Bob';
+
+-- Oops—decide to revert Step 2 only
+ROLLBACK TO after_alice;
+
+select * from accounts;  -- undoes Bob’s update, keeps Alice’s deduction
+
+-- Do something else instead
+UPDATE accounts SET balance = balance + 300 WHERE customer = 'Charlie';
+
+RELEASE SAVEPOINT after_alice; -- optional; automatically released at COMMIT/ROLLBACK
+
+COMMIT;
+
+
+
