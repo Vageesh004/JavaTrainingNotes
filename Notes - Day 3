@@ -1,0 +1,376 @@
+19/11:  Java Training Notes - Day 3 
+
+Softwares required for Training:
+
+Git
+Workbench
+MySQL 8
+
+Jdk
+Eclipse - J2ee
+Postman
+Maven
+Lombok
+
+Node - npm (node package manager) will install the Angular
+VS code
+STS
+
+
+POJO- Pay rolled Java Object
+Private properties are there, getter setter are there
+
+Bean , Entity and all modified version of this
+
+
+
+----------Software Engineering----------------------
+
+Changing Requirements
+Environmental Shifts
+
+Error correction and quality improvement
+Business needs and regulations
+
+
+
+Software models:
+
+4.Increment
+
+5.Agile - 
+
+
+Sprint based targets
+
+Waterflow model was basic and old...taken all requirements and doing
+
+Process adopter - 
+
+
+The Software Engineering life cycle(SDLC):
+
+- Planning
+- Analysis
+
+- Design
+- Implementation
+
+- Testing & Integration
+- Maintenance
+rrr
+
+
+functional and non - functional requirements:
+
+
+
+Planning and Analysis:
+
+- Define Objectves
+- Scope and budget
+
+- Risk Identification
+-Feasibility study
+
+- Output -> project plan
+
+
+
+
+Requirement Analysis:
+
+- Functional Requirements - must be present definitely in the feature
+-Non- functional requirements - may or may not be present
+- Use cases and user stories
+
+- Output - > SRS document - Software Requirements
+
+
+
+Design and Prototyping:
+
+DFD - data flow diagram
+
+we have DFD symbols
+
+
+
+
+
+
+Project Management:
+
+
+
+
+ER Model:
+
+
+Entity , Attribute , Relationship
+
+
+Entity Set
+
+
+Strong Entity and Weak Entity:
+
+
+The Entity which depends on another entity are weak entity.. represented by double rectangle
+
+
+Composite Attribute:
+
+Address has Street , city, state, country etc.
+
+
+Multivalued attribute- Phone No
+
+Derived attribute - Age
+
+
+
+Unary/Recursive Relationship:
+
+Binary relationship:
+
+
+Ternary:
+
+N-ary:
+
+
+
+
+
+ER- Diagram:
+
+Employee:  
+
+
+Attribute Diagram
+
+ER Diagram
+
+Partial Attribute , partial Entities, we will speak in DTOs
+
+
+
+
+
+Query Clauses:
+
+1.Offset
+
+2.Distinct
+
+3. Join
+
+
+like , 
+
+
+Group By:  To group the values of a column..  
+
+if after that, we want any particular details, use 'Having'.
+
+
+Question: write query to fetch all records having their email as gmail.
+
+
+Question: Retrieve all the records of the customers with the corresponding SalesRep information
+
+
+
+
+
+
+
+
+
+
+
+
+create database customers;
+use customers;
+
+drop database customers;
+
+use vageesh;
+
+show tables;
+show databases;
+
+use classicmodels;
+
+show tables;
+
+
+/* Qn 1*/
+select * from customers;
+insert into customers (customerNumber, customerName,contactLastName	,contactFirstName,phone,addressLine1,city,postalCode,country,salesRepEmployeeNumber,creditLimit) values
+(101,'La Corne D abondance, Co.','Bertrand','Marie','(1) 42.34.2555	265', 'boulevard Charonne','Delhi','75012','India',1337,84300.00);
+
+
+/* Qn 2*/
+select * from customers;
+set sql_safe_updates=0;
+update customers set creditLimit= creditLimit+ (creditLimit *10 /100) where country='Germany';
+
+/*Qn 3*/
+select * from orders;
+delete from orders 
+where orderDate< '2005-01-01';
+
+/*Delete from OrderDetails table first bcoz order table is parent table for that..so we should delete orderdetails first*/
+select * from orderdetails;
+
+Delete from orderdetails
+where orderNumber IN(
+	select orderNumber
+    from orders
+    where orderdate < '2005-01-01'
+);
+
+Delete from orders
+where orderdate < '2005-01-01';
+
+
+/*Qn 4*/
+select * from products;
+insert into products (productCode,productName,productLine,productScale,productVendor,productDescription,quantityInStock,buyPrice,MSRP) values
+('S10_2025','1952 Alpine Renault 1300','Classic Cars', '1:10',	'Classic Metal Creations',	'Turnable front wheels; steering function; 
+detailed interior; detailed engine; opening hood; opening trunk; opening doors; and detailed chassis.',	7305,98.58,	214.30);
+
+
+/* Qn 5*/
+select * from customers;
+select * from payments;
+
+insert into payments (customerNumber,checkNumber,paymentDate,amount) values (103,"HQ336340",'2004-11-19',6000.00);
+
+/*Qn 6*/
+select * from offices;
+UPDATE offices
+SET phone = '+44 20 7946 0958'
+WHERE city = 'London';
+
+/* Qn 7*/
+select * from products;
+
+
+
+
+
+
+
+
+
+
+
+select * from orderdetails;
+select * from customers;
+select distinct country from customers;
+
+select * from customers where customerName like 's%';
+select * from employees;
+insert into employees 
+select * from employees where firstName like '';
+
+insert into employees (employeeNumber, lastName, firstName, extension, email, officeCode, jobTitle) values (1000,'Musphy','Diane','x5800','dmurphy@classicmodelcars.com',1,'President');
+
+select * from employees where lastName like 'Mu_phy';
+
+/* Group By* and having and order by*/
+select state, count(*) from customers group by state;
+
+select state, count(*) from customers group by state having state='ma';
+
+select ordernumber, count(*) from orderdetails group by ordernumber;
+
+
+/* Query for printing details of email having as gmail*/
+/*select customername.email from customer where email like '%gmail.com';*/
+
+
+/* Quesn: To retrieve customer from salesRepNumber*/
+select * from customers c, employees e where c.salesRepEmployeeNumber=e.employeeNumber;
+/* This is the first way of relating 2 tables... this is not join..*/
+
+select * from payments;
+/* Quesn: Retrieve all payments and customer */
+select * from customers c,payments p where c.customerNumber= p.customerNumber;
+
+/* All order details for customer number 103*/
+select * from orders;
+select * from orders o, customers c where o.customerNumber=c.customerNumber and o.customerNumber=276;
+
+
+
+
+------------------------Joins--------------------------------
+
+on vageesh database
+
+
+
+use vageesh;
+
+show tables;
+drop table customers;
+
+
+-- Create customers table
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_name VARCHAR(100) NOT NULL,
+    city VARCHAR(100) NULL
+);
+
+-- Create orders table
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT NOT NULL,
+    order_date DATE NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    CONSTRAINT fk_orders_customer
+        FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+        ON DELETE CASCADE -- optional, helpful if you ever delete a customer
+);
+
+-- (Optional but recommended) Index for faster joins
+CREATE INDEX idx_orders_customer_id ON orders(customer_id);
+
+
+-- Customers: Alice (has orders), Bob (no orders), Cara (has orders)
+INSERT INTO customers (customer_name, city)
+VALUES 
+  ('Alice', 'London'),
+  ('Bob',   'Paris'),
+  ('Cara',  'Berlin');
+
+-- Orders: two for Alice, one for Cara
+INSERT INTO orders (customer_id, order_date, amount)
+VALUES
+  (1, '2025-01-05', 120.00),
+  (1, '2025-02-10', 75.50),
+  (3, '2025-03-01', 200.00);
+  
+  SELECT
+    c.customer_id,
+    c.customer_name,
+    o.order_id,
+    o.order_date,
+    o.amount
+FROM customers AS c
+LEFT JOIN orders AS o
+  ON o.customer_id = c.customer_id
+ORDER BY c.customer_id, o.order_date;
+  
+  
+
+Mam is working on product table and Order table
+
+
+
+
