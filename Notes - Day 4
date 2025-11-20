@@ -1,1 +1,440 @@
+20/11: Notes - Day 4:
+
+
+create an employee table and department table.. Employee: id, name, salary, deptid,joining date.. Department: Deptid, deptname..
+Add 4 departments (HR,account,IT,sales)
+
+1.Employee earning more than lowest salary
+2. Depatments where avg salary >50000
+3. Employees joined before earliest HR joining date
+4. Employee list with total employee count
+
+5. Employees not belonging to any department
+6. Retrieve employees whose salary is between the minimum and maximum salary of the IT department
+
+7. Retrieve employees whose salary between avg and max salary
+
+8. List employees whose joining date is between the earliest and latest joining date in their department
+
+
+
+Indexing:
+
+It internally has B + trees structure.. time is log n..
+
+It reduces the search time.. use only for searching..
+
+not for inserting, updating, deleting etc.
+
+
+
+/* Indexing*/
+select id, name from Employee;
+show profiles;
+show profile for query 34;
+create index name_idx1 on Employee(name);
+select id,name from Employee;
+show profile for query 34;
+
+
+
+We can create unique index only for non-repeating attributes, like Primary key, name etc.
+
+for Foreign key which is repeating something, it will show error when we create an index for that
+
+
+
+
+
+Explain: Explain select * from Employee where salary > 50000
+
+It is used to tell whether indexing is used or not,
+about the scanning details like which row is scanned etc.
+
+
+
+
+Views:  It is like DTO's in Java
+
+A View is a virtual table
+
+
+
+
+
+
+
+
+
+
+
+-- Department table
+CREATE TABLE Department (
+  deptid   INT PRIMARY KEY,
+  deptname VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Employee table
+CREATE TABLE Employee (
+  id           INT PRIMARY KEY,
+  name         VARCHAR(100) NOT NULL,
+  salary       DECIMAL(12,2) NOT NULL,
+  deptid       INT NOT NULL,
+  joining_date DATE NOT NULL,
+  CONSTRAINT fk_employee_department
+    FOREIGN KEY (deptid) REFERENCES Department(deptid)
+    );
+    
+    
+INSERT INTO Department (deptid, deptname) VALUES
+  (1, 'HR'),
+  (2, 'account'),
+  (3, 'IT'),
+  (4, 'sales');
+  
+  
+INSERT INTO Employee (id, name, salary, deptid, joining_date) VALUES
+  (201, 'Asha',        45000.00, 1, '2023-04-15'),
+  (202, 'Ravi',        52000.00, 3, '2022-11-01'),
+  (203, 'Meera',       60000.00, 3, '2024-01-10'),
+  (204, 'Sanjay',      30000.00, 2, '2021-07-20'),
+  (205, 'Neha',        80000.00, 4, '2020-03-05'),
+  (206, 'Kiran',       38000.00, 1, '2022-02-18'),
+  (207, 'Divya',       71000.00, 4, '2023-06-22'),
+  (208, 'Ankit',       49000.00, 2, '2021-12-12'),
+  (209, 'Sneha',       54000.00, 3, '2024-08-01'),
+  (210, 'Varun',       47000.00, 1, '2020-09-30'),
+  (211, 'Pooja',       33000.00, 2, '2019-05-14'),
+  (212, 'Arjun',       90000.00, 4, '2022-03-25'),
+  (213, 'Nisha',       62000.00, 3, '2023-10-11'),
+  (214, 'Harish',      51000.00, 1, '2021-01-08');
+  
+/* Qn 1*/
+select * from Employee where salary > ( select min(salary) from Employee);
+
+/*Qn 2*/
+select * from department ;
+
+/* Qn 3*/
+/*select * from Employee where joining_date < (select joining_date from Employee where deptid=1 orderby(joining_date) limit 1);*/
+
+select * from Employee where joining_date < (select min(joining_date) from Employee where deptid=(select deptid from department where deptname='HR'));
+
+/* Qn 2*/
+select deptname, deptid from department_table where deptid in
+(select deptid from employee_table group by deptid having avg(salary) > 50000);
+
+
+/* Qn 7*/
+select id,name,salary from Employee where salary between
+(select avg(salary) from Employee) and (select max(salary) from Employee );
+
+
+/* Indexing*/
+select id, name from Employee;
+show profiles;
+show profile for query 34;
+create index name_idx1 on Employee(name);
+select id,name from Employee;
+show profile for query 34;
+
+drop index name_idx on Employee;
+drop index name_idx1 on Employee;
+
+
+
+/*Unique index*/
+select count(distinct (name)) from Employee;
+
+create unique index unique_name_idx on Employee(name);
+show indexes from Employee;
+drop index unique_name_idx on Employee;
+
+create index composit_idx on Employee(name,salary);
+explain select id, name from Employee where name='Sanjay';
+
+
+/* Creating views*/
+
+create view mgr_view as select id,name,salary from Employee;
+select * from mgr_view;
+
+set sql_safe_updates=0;
+update mgr_view set salary=80000 where name='Sanjay';
+select salary from Employee where name='Sanjay';
+
+create view join_view_tab as
+select id,name, deptname from Employee left join Department using(deptid);
+
+select * from join_view_tab;
+update join_view_tab set salary=80000 where name='Sanjay';
+
+alter view mgr_view as select id,salary from Employee;
+select * from mgr_view;
+
+create or replace view mgr_view as select id,name,joining_date from Employee;
+
+/* Procedures*/
+delimiter $$
+create procedure retrieveEmp()
+begin
+    select * from Employee;
+end $$
+
+call retrieveEmp();
+
+delimiter $$
+create procedure getAllEmpByDeptId(in did int)
+begin
+    select * from Employee where deptid=did;
+end $$
+
+call getAllEmpByDeptId(30);
+
+delimiter $$
+create procedure getEmployeesCount(out count1 int)
+begin
+	select count(*) into count1 from employee_table;
+end;
+
+call getEmployeesCount(@c);
+select @c;
+
+/* increase given input value by 10 and print back*/
+delimiter $$
+create procedure incValue(val int)
+begin
+   set val=val+10;
+end $$
+
+set @v=25;
+call incValue1(@v);
+select @v;
+
+
+/* check whether given employee having high salary or not.*/
+delimiter $$
+create procedure checkSalary(in id int)
+begin 
+	declare sal int;
+    select salary into sal from Employee where id=eid;
+    if sal>60000 then
+    select 'high salary' as result;
+	
+    else
+    select 'low salary' as result;
+    end if;
+end $$
+
+drop procedure checkSalary;
+
+call checkSalary(12);
+
+
+/* print grade of a studdent depending on marks , marks > 80 -A , marks > 70 - B , else fail*/
+
+delimiter $$
+
+create procedure getGrade(in marks int)
+begin
+	if marks>80 then
+		select 'A' as grade;
+        
+	elseIf marks>70 then
+		select 'B' as grade;
+        
+	else
+		select 'Fail' as grade;
+        
+	end if;
+end $$;
+
+delimiter ;
+
+call getGrade(75);
+
+
+/* print nos from 1 to 10 using while loop*/
+delimiter $$
+create procedure printNums()
+begin
+	declare i int default 1;
+    while i<=10 do
+		select i;
+        set i=i+1;
+	end while;
+    
+end 
+
+delimiter $$
+
+call printNums();
+
+
+
+delimiter $$
+create procedure usingRepeat()
+begin
+	declare i int default 1;
+    repeat
+		select i;
+        set i=i+1;
+	until i>10
+end repeat;
+end $$
+    
+
+
+delimiter ;
+
+call usingRepeat();
+
+
+
+
+
+Procedures and Functions:
+
+procedures means multiple values can be returned...functions means not like that..
+
+Functions return  a single value
+
+
+
+/* Functions */
+
+delimiter $$
+create function getFullname(fname varchar(10), lname varchar(10))
+returns varchar(50)
+deterministic
+begin
+	return concat(fname,' ',lname);
+end $$
+
+delimiter ;
+
+select getFullname('swapna','motupally');
+
+
+
+/* Functions Qn 2*/
+
+delimiter $$
+
+drop function if exists getgrade $$
+create function getgrade(marks int)
+returns varchar(10)
+deterministic
+begin
+	if marks>80 then
+		return 'A';
+        
+	elseIf marks>70 then
+		return 'B';
+        
+	else
+		return 'C';
+        
+	end if;
+end $$;
+
+delimiter ;
+
+call getGrade(75);
+
+
+
+
+
+
+
+
+
+
+
+												JAVA
+
+
+Platform independent.. bcoz of byte oriented
+
+Java's features:
+
+OOP's concepts:
+
+1.Abstraction
+
+First level of abstraction - 
+
+
+2.Encapsulation - Wrapping up of every data into a single unit
+
+3. Inheritence - Acquiring the features from one class to another class
+
+4. Polymorphism - the same method at different forms
+
+ compile time : method overloading
+
+ Run-time: method overriding
+
+
+Garbage Collection
+
+Multithreading: 
+
+using 1. Thread class
+
+2. Runnable interface
+
+
+
+JVM (Java virtual machine):
+
+
+class Loader:
+
+
+Stack Area: Method Area
+            
+            Heap Area - objects
+
+The default thread which runs always is main thread
+
+Daemon thread: The threads running in the background.. 
+
+
+
+PC Registers
+
+
+Interpreter : It does line by line execution..  . class files are run by it
+
+JIT: Just in time compiler
+
+
+
+Visual VM: jps is used for the process id no showing --> it is in command prompt
+
+
+the threads running in the background can be seen in visual VM
+
+
+import java.util.*;
+
+ public class Sample{
+	public static void main(String args[]){
+		System.out.println(" Java Training");
+}
+}
+
+
+
+Wrapper class : For every primitive type, we have the wrapper class for it. 
+
+
+i<<1-> left shift
+i>>1 -> right shift
+
+
+Ternary operator: 3 operands with 2 operator
+
 
