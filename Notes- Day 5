@@ -1,0 +1,318 @@
+ Java Training: Nov 21
+
+Day 5
+
+Java :
+
+Regex101 - website for learning abt Regular Expression
+
+
+
+Question 2: Switch case to finish simple calculator
+
+Learnt about Sonar lint --if possible - code coverage tool
+
+Question 3:
+
+
+Qn :
+print your name until you give 'No'
+
+
+
+------------Maven-------:
+
+Standalone Appln - means on that system only it will work
+
+
+
+QuickStart
+and Web App
+
+for some Build Success, for some, plugins build error came
+
+Project -> right click -> maven build -> Goals: clean install
+
+Then, build success will come..
+
+give alt f5, force update, ok..
+
+
+There is a parent class called object class.
+
+Wait , notify and many other methods will be there
+
+
+
+
+Inheritence:
+
+-> extends
+
+---> Multiple inheritence is not possible in Java
+
+
+-> Object class is like parent cls to all classes
+
+
+SA and Current Account
+
+
+
+If the getter setter are not in child class, JVM will search and get from the parent class
+
+
+
+System class has 3 objects... in , out , err
+
+
+Virtual polymorphism: when Jvm is working on runtime, if definition or signature of the parent and child class is same, it decides whether to go to parent class or child class.. 
+
+It is called Runtime polymorphism or Dynamic Polymorphism..
+
+
+
+Abstract class: 
+
+If a method is abstract , then the class is definitely abstract..
+
+Normal classes does n't have abstract methods..
+
+
+
+Current Account Menu:
+
+1.checkdetails
+
+2. checkOverdraft limit
+
+3. withdraw
+
+4. deposit
+
+5. reset pin or change pin
+
+6. Generate pin
+
+
+
+Menu:
+
+1.Saving Account
+
+2. Current Account
+
+
+Savings Account menu:
+
+
+
+
+Trying to push maven project to GitHub:
+
+Right click, team, commit.. , write commit msg..then commit and push..
+
+then in githhub account, developer settings, new classic key.. create one and copy
+
+
+
+
+
+JVM Supplies the default constructor when we do not provide any.
+
+
+All the static blocks will be executed first before the main method
+
+why we have created main as a static method??
+
+
+
+
+
+
+
+
+Question:  Create a college class inside a Student class... Inner cls creation
+
+
+
+Interfaces:
+
+Multiple inheritance is not possible in Java..
+
+but through Interface it is possible..
+
+
+
+final - it is constant... it can be applied through class level, method level.. local variable too... only modifier that can be in local.
+
+final class can't be extended.. method cannot be overridden..
+
+
+
+
+p s v m(String args[]){
+	A a=new A();
+	a.display();
+
+	B b=new B();
+	b.display();
+
+	C c=new C();
+	c.display();
+
+	a=b;
+	a.display();
+
+	a=c;
+	a.display();
+}      // Dynamic Binding
+
+ 
+Dynamic binding means, at runtime only, we come to know which one that a.display is referring...
+
+
+Another Dynamic Binding prgm:
+
+package com.nov21.Day1MavenProject;
+
+public interface Interface1 {
+	public default void sayHello() {
+		System.out.println("From Interface1 sayhello");
+	}
+}
+
+
+package com.nov21.Day1MavenProject;
+
+public interface Interface2 {
+	public default void sayHello() {
+		System.out.println("From Interface2 sayHello");
+	}
+}
+
+
+
+package com.nov21.Day1MavenProject;
+
+public class Class1 implements Interface1,Interface2{
+	@Override
+	public void sayHello() {
+		//to avoid diamond problem, we go to interface related sayHello method
+		Interface2.super.sayHello();
+	}
+	
+	public static void main(String args[]) {
+	
+	Class1 c1=new Class1();
+	c1.sayHello();
+	
+	//Interface does not have objects...can't put new here
+	Interface1 i1=new Class1();
+	i1.sayHello();
+	
+	Interface2 i2=new Class1();
+	i2.sayHello();
+	
+	}
+}
+
+
+------------Strings-----------
+
+For every String, there is a permeanant object space..
+for every change, there is a new object space allocated..
+
+For this only, we don't use Strings that much...so we use StringBuffer and StringBuilder..
+
+
+
+
+package com.nov21.Day1MavenProject;
+
+public class StringMain {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String s="hello";
+		System.out.println(s.hashCode());
+		s="helloworld";
+		
+		System.out.println(s.hashCode());
+		String s1="hello";
+		
+		System.out.println(s1.hashCode());
+		
+		String s2=new String("hello");
+		System.out.println(s2.hashCode());
+		
+		System.out.println(s.length());
+		System.out.println(s.indexOf('w'));
+		
+		String s3="Mphasis";
+		s2.concat(s3);
+		System.out.println(s2);  //it will not change s2 or s3..
+		//the result is a 3 rd object, Hello Mphasis
+		
+		System.out.println(s1==s2); //false ..this is reference..this is address
+		//this would be different
+		
+		System.out.println(s1.equals(s2)); //value comparison.. this is same...
+		
+		System.out.println(s.substring(5,10));  //starting to ending index
+		
+		// s1 and s2 are addresses stored in stack
+		//so they are different..
+		//but s1.equals(s2) means.. they refer to the same variable area 
+		//i.e hello stored in the heap
+		
+		
+		
+	}
+
+}
+
+
+
+
+Today's class Overview:
+
+
+Morning:
+Prime nos
+
+Do while , while loop prgm 
+
+Reverse no
+
+switch case
+
+
+
+Morning after break:
+
+That maven project downloaded.. build success came... then, 
+
+that 
+
+ Afternoon:
+
+Tried to use Lombok..but not able to 
+
+Then , prgm on ComplexNumbers was done
+
+Then, in App.java, s1.hashCode(), s2.hashCode() were done
+
+Then, using static blocks
+
+
+Afternoon after break:
+
+Interface.. ScientificCalculatorInterface program
+
+Dynamic Binding example
+
+Another Dynamic Binding example program... interface 1,2 class1 ... default method etc.
+
+
+Strings..hashCode..equals etc
