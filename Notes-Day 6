@@ -1,0 +1,406 @@
+Day 6: Java Training
+
+
+String Buffer and String Builder:
+
+String Buffer is thread safe but String Builder is not thread safe...
+But the methods are almost same in both
+
+
+String Joiner and String Tokenizer are also there...
+
+
+
+
+package com.nov22.Day6_MavenProject;
+
+import java.util.*;
+import java.lang.*;
+
+public class MutableStrings {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		StringBuffer buff=new StringBuffer();
+		
+		buff.append("Dhoni");
+		buff.append("Kohli");
+		buff.append("Rohit");
+		buff.append("Jaddu");
+		
+		System.out.println(buff);
+		System.out.println(buff.capacity());
+		
+		StringBuffer sbf=new StringBuffer("name");
+		System.out.println(sbf.capacity());
+		sbf.ensureCapacity(15); //just ensures the capacity..if less,does nothing
+		//else it increases to that capacity
+		
+		System.out.println(buff.capacity());
+		sbf.ensureCapacity(30);
+
+		sbf.ensureCapacity(sbf.capacity());
+		
+		
+		StringBuilder sbl= new StringBuilder("Swapna Motupally");
+		sbl.replace(7, 13, "*");
+		System.out.println(sbl);
+		
+		System.out.println(sbl.reverse());
+		
+		
+		String str="apple,banana,orange,pineapple";
+		StringTokenizer tokenizer=new StringTokenizer(str,",");
+		
+		while(tokenizer.hasMoreTokens()) {
+			System.out.println(tokenizer.nextToken());
+		}
+		
+		StringJoiner sj=new StringJoiner(",");
+		sj.add("Smith");
+		sj.add("Starc");
+		sj.add("Cummins");
+		sj.add("Head");
+		System.out.println(sj);
+	}
+
+}
+
+
+
+
+----------Arrays--------------:
+
+Arrays are part of Linear Data Structures..
+
+There are 2 types..Linear and Non-linear data structures
+
+
+Arrays,Linked lists, Stacks, Queues are linear data structures
+
+
+Array: Homogenous items allocated at sequential memory locations
+
+
+Driver classes are the classes with main method
+
+The other classes are business logic classes
+
+
+
+
+package com.nov22.Day6_MavenProject;
+
+import java.util.Arrays;
+
+public class DemoOnArraysUtilityClass {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		int [] arr= {10,35,72,11,40,5};
+		int [] brr= {35,72,11,5,40,10};
+		
+		String nums=(Arrays.toString(arr));
+		System.out.println(nums);
+		
+		Arrays.sort(arr);
+		System.out.println(arr);
+		
+		for(int ele:arr) {
+			System.out.println(ele);
+		}
+
+		System.out.println(Arrays.binarySearch(arr,30));
+		
+		System.out.println(Arrays.equals(arr,brr));
+		
+		int[] crr=Arrays.copyOf(arr, 10); //we are fixing new size of crr
+		
+		for(int ele:crr) {
+			System.out.println(ele);
+		}
+		
+		Arrays.fill(arr, 78);
+		for(int ele:arr) {
+			System.out.println(ele);
+		}
+		
+	}
+
+}
+
+
+
+Exception Handling:
+
+Error can't be handled.. but exception can be handled
+
+catch is the only way of handling exception
+
+
+Throws and all for throwing
+
+1. try catch
+
+2. throw
+
+3. throws
+
+
+Throwable -> Exception and Error
+
+Exception -> RunTimeException and Exception Sub-classes
+
+RunTimeException - Unchecked Exception
+
+
+Exception is the parent class for all of it.
+
+
+
+Finally block will be executed even if exception is there or not there
+
+
+
+Error: Subclass of Throwable that should not be catched
+
+
+
+Throw: only one object it throw
+
+
+
+
+package com.nov22.Day6_MavenProject;
+
+public class DemoOnException {
+	public static void main(String args[]) {
+		int a=5,b[]= {2,3,1,5};
+		String s=null;
+		
+		//System.out.println(s.charAt(5));
+		
+		try {
+			for(int i=0;i<=b.length;i++)
+				System.out.println(a/b[i]);
+			
+			try {
+				System.out.println(s.charAt(5));
+			}catch(NullPointerException ae) {
+				ae.printStackTrace();
+			}
+		} 
+		catch(ArithmeticException ae) {
+			ae.printStackTrace();
+		}
+		
+		catch(ArrayIndexOutOfBoundsException ae) {
+			System.err.println(ae.getMessage());
+			
+		}
+		
+		catch(RuntimeException ae) {
+			ae.printStackTrace();
+		}
+		
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		System.out.println("Application closed successfully");
+	}
+
+}
+
+
+
+
+package com.nov22.Day6_MavenProject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
+public class DemoOnFileNotFound {
+	
+	public static void useFile(File f) throws FileNotFoundException {
+		
+		if(!f.exists()) {
+			throw new FileNotFoundException();
+		}
+	}
+	public static void main(String[] args) throws FileNotFoundException {
+		
+		File f=new File("demo.txt");
+		
+		useFile(f);
+	}
+
+}
+
+
+
+
+
+
+
+
+-> Using separate try-catch for executing multiple exceptions
+
+-> throw is used in custom Exceptions mostly...
+
+-> catch only is used to handle the exceptions.. throw 
+
+
+-> throw will go with one object only
+
+-> throws will throw multiple Exception classes
+
+
+
+
+Global Exception ----> in SpringBoot , we use this..
+
+we won't and can't write try-catch everytime for big applications..
+
+
+we use ASP
+
+
+// Assignment Q 2) she told something...
+
+
+
+Try with Resources:
+
+
+Work of gc we are reducing..
+
+If we use this, automatically we are closing the connection..
+
+there is close() method , a predefined method there
+
+
+
+
+Functional Interface:
+
+
+Lambdas: 4 ways
+
+
+
+47 Functional Interfaces are there in Function package Java
+
+Comparable Runnable are functional  Interface
+
+Marker Interface: Empty interface
+
+
+
+Question: Write a lambda expression to print your name using a functional Interface with a single abstract method 'printName'(String name)
+
+
+Question: Write a lambda function to reverse a given string of a functional interface having method stringReverse(String str)
+
+Qn: Even or Odd using Lambda
+
+Qn: Write a lambda function to square every element of an array using a function squareNum of FI
+
+Quesn: Write a lambda to sort given strings of an array using a FI method sortStrings
+
+
+Quesn:  Write a lambda that takes an array of strings and returns array of their lengths using findLength method of a FI
+
+
+
+Assignment Questions:
+
+1. Arrays:
+
+ -> Insert an element at given pos...shift
+
+-> Delete an element from given pos...delete
+
+-> If the size is n,wants to insert at n+1 th position .. make an another array of big size and push
+
+
+2. Modify the Banking Application with Insufficient funds Exception
+
+
+
+
+
+
+SDLC Example:
+
+Planning
+
+
+Requirement Analysis and Feasibility study SRS
+
+Design - The Blueprint
+
+
+Implement
+
+Test - JUnit
+
+Deployment
+
+Maintainance
+
+
+Flowchart:
+
+1. Draw a flowchart adding 2 nos
+
+2.
+
+
+Pseudocode:
+
+1.sort an array
+2.search in array
+
+
+
+
+
+Morning:
+
+StringBuffer,StringBuilder, StringTokenizer, StringJoiner
+
+Arrays
+
+
+
+Morning after break:
+
+Exception Handling - try catch , throw, throws.. custom exception .. 
+
+Try with Resources
+
+
+Afternoon:
+
+Java 8 features: Functional Interface
+
+CreditCard related prgm
+
+
+Payment
+Upi
+Main
+CreditCard - classes and interfaces
+
+
+Lambda functions - 5 to 6 example prgms
+
+
+Afternoon after break:
+
+SDLC phases explained
+
+Flowchart
