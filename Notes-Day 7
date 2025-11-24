@@ -1,0 +1,291 @@
+ 24/11 : Java Training Notes: Day -7
+
+
+To select the Maven Project, go to File, Import, select from there
+
+
+
+To select entire folder, file-> select folder
+
+Later,we use Spring initializer and get from local
+
+
+
+Question: Sort Employees array by salary using lambda
+
+
+
+public class Employee {
+	public String name;
+	public int salary;
+	
+
+	public Employee(String name, int salary) {
+		super();
+		this.name = name;
+		this.salary = salary;
+	}
+
+
+	public Employee() {
+		super();
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public int getSalary() {
+		return salary;
+	}
+
+
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Employee [name=" + name + ", salary=" + salary + "]";
+	}
+	
+	
+
+}
+
+
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class LClass{
+	
+
+	/*public static void main(String args[]) {
+		Employee[] employees=new Employee[] {
+
+			new Employee("Alice", 90000),
+            new Employee("Bob", 60000),
+            new Employee("Carol", 75000),
+            new Employee("Dave", 60000)
+
+		};
+		
+		
+
+		 // Lambda that sorts by salary (ascending) and prints the array
+		        LambdaInterface sorter = arr -> {
+		            // Ascending by salary
+		            /*Arrays.sort(arr, Comparator.comparingInt(Employee::getSalary));*/
+
+		            // If you want descending order instead, use:
+		            // Arrays.sort(arr, Comparator.comparingInt(Employee::getSalary).reversed());
+
+		          
+		        	//Arrays.sort(empArr,(e3,e4)->e1.getEmpName().compareTo(e2.getEmpName);
+		        	
+		        	 
+		            /*for (Employee e : arr) {
+		                System.out.println(e);
+		            }
+		        };
+
+		        // Execute the sort + print
+		        sorter.sortArray(employees);
+		    }*/
+}
+
+
+	
+	
+
+public interface LambdaInterface {
+	public void sortArray(Employee[] arr);
+}
+
+
+
+
+Supplier Program:
+
+
+package com.nov22.Day6_MavenProject;
+
+import java.util.function.Supplier;
+
+public class DemoSupplier {
+	public static void main(String[] args) {
+		String name="Vageesh";
+		
+		Supplier<String> supplier=()->name.toUpperCase();
+		
+		System.out.println(supplier.get());
+		
+		Supplier<Integer> randomSupplier=()-> {
+			return (int)Math.round(Math.random()*10000);
+		};
+		
+		System.out.println(randomSupplier.get());
+		
+		int a=89,b=34;
+		Supplier<Integer> maxSupplier=()->{
+			return (a>b?a:b);
+		};
+		
+		System.out.println(maxSupplier.get());
+	}
+}
+
+<>  -> Inside it is Generic class. It accepts any data type.
+
+
+Supplier : always supplies the data, one data at a time
+
+Consumer: always consumes the data
+
+Predicate: always returns as true or false
+
+Function: 1. Add bonus 10000 to employees whose salary >10000
+
+
+Method References: Instead of writing the full Lambda, we can use method references
+
+Static Method References and Object Method References
+
+
+Lambda: can be used in
+
+1.Functional Interfaces
+
+2. Collections
+
+3. Streams
+
+Method References are short form of Lambda... It is also used only where Lambda is used
+
+
+Date and Time:  
+
+Here all the methods used are Static methods... so only we use ClassName.methodName
+
+To learn about a class, give right click , open declaration...
+
+
+
+
+
+Question: Object method Ref: Number Util class:  square,log, even...write only object MR, no need of Lambdas
+
+
+
+
+Questions:
+
+1. Filter strings that starts with 'A'.. using lambda...using built in functions
+
+2. Print Employees salary with bonus
+
+
+3. Validate password - should have min length  8, atleast one capital letter , one small letter, one spl character , one digit
+
+4. Convert util date to sql date format
+
+5.Convert a given date string into util representation and then sql Representation
+
+6. use isBefore isAfter ...
+  code for comparing two times  -  in LocalTime
+
+7.LocalDateTime 
+
+8. String in the format yyyy-MM-dd hh:mm:sec a
+
+
+
+
+
+
+Steps to upload maven project to GitHub:
+
+GitHub: settings: Dev settings: token, generate token.. copy that
+
+In maven, click on that project..right click.. Team.. create connection..
+
+then commit, give the username, git password or the copied code.. first time git password..then next , the code
+
+
+
+Assignment Questions:
+
+
+
+
+
+Date and Time:
+
+Before Java 8, we subtract 2025-1900 , we use 0-11 , not thread safe
+
+After Java 8, JRE ?? is there.. Thread safe, 0-12, no subtraction
+
+We have DataTime Formatter not formatter.. 
+
+
+
+My doubts:
+
+
+1.will it work inside main only
+
+2.diff btw obj and static method reference
+
+3. names given in MR and in class should be same??
+
+4. why we are using class?? not interface?
+
+5. why we perform operations in the class? not on functional interface?
+
+
+6.why we use wrapper class?
+
+
+
+Morning:
+
+One FunctionalInterface - Employee prgm
+
+
+Functional Interfaces - Supplier- one prgm
+
+Consumer - One prgm
+
+Predicate - one prgm
+
+Function - one prgm
+
+
+Morning - After break:
+
+1. DemoOnStaticMethodReference - 4 functions..
+
+2. DemoOnObjectMethodReference - 1 example..4 functions - Hello and NumberUtil 3 functions
+
+3 questions given for practice
+
+
+
+Afternoon: 
+
+Date
+
+Time
+
+Afternoon - after break:
+
+LocalDateTime
