@@ -36,7 +36,7 @@ public class DemoOnGenerics {
 		c4.setItem(irr);
 		System.out.println(Arrays.toString(c4.getItem()));*/
 		
-		/*Pair<String,Double> p1=new Pair<String,Double>("distance in km",7.5);
+		Pair<String,Double> p1=new Pair<String,Double>("distance in km",7.5);
 		System.out.println(p1);
 		
 		Pair<String,Double> p2=new Pair<String,Double>("weight in kg",6.0);
@@ -48,10 +48,10 @@ public class DemoOnGenerics {
 		Student s=new Student(234,"Amit","Java");
 		
 		Pair<Integer,Student> p4=new Pair<Integer,Student>(1,s);
-		System.out.println(p4);*/
+		System.out.println(p4);
 		
 		
-		/*Order<String> o1=new Order<String>("Laptop");
+		Order<String> o1=new Order<String>("Laptop");
 		Order<String> o2=new Order<String>("Mobile phone");
 		System.out.println(o1);
 		System.out.println(o2);
@@ -64,17 +64,17 @@ public class DemoOnGenerics {
 		
 		//create order for this item array
 		
-		/*Item item1=new Item(101,"Laptop",50000);
+		Item item1=new Item(101,"Laptop",50000);
 		Item item2=new Item(102,"Mobile",30000);
 		
 		Item irr[]= {item1,item2};
 		
 		Order<Item[]> o4=new Order<Item[]>(irr);
 		
-		System.out.println(Arrays.toString(irr));*/
+		System.out.println(Arrays.toString(irr));
 		
 		
-		/*Integer nums[]= {4,5,6,7,8,9,0};
+		Integer nums[]= {4,5,6,7,8,9,0};
 		String strs[]= {"str1","str2","str3","str4"};
 		ArrayPrinter<Integer> ap1=new ArrayPrinter<>(nums);
 		ArrayPrinter<String> ap2=new ArrayPrinter<>(strs);
@@ -94,4 +94,5 @@ public class DemoOnGenerics {
 	}
 
 }
+
 
