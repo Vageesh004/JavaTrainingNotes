@@ -16,7 +16,7 @@ public class DemoOnGenerics {
 	
 	public static void main(String args[]) {
 		
-		/*Container<String> c1=new Container<String>();
+		Container<String> c1=new Container<String>();
 		c1.setItem("Vageesh");
 		System.out.println(c1.getItem());
 		
@@ -80,7 +80,7 @@ public class DemoOnGenerics {
 		ArrayPrinter<String> ap2=new ArrayPrinter<>(strs);
 		
 		System.out.println(ap1);
-		System.out.println(ap2);*/
+		System.out.println(ap2);
 		
 		
 		display("Vageesh");
@@ -94,3 +94,4 @@ public class DemoOnGenerics {
 	}
 
 }
+
