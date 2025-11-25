@@ -96,3 +96,16 @@ public class DemoOnGenerics {
 }
 
 
+List list = new ArrayList();
+list.add("Hello");
+String str = (String) list.get(0); // Manual casting required
+
+Here, list.get(0) returns Object.
+You must cast to String.
+If you accidentally store an Integer and cast to String, you get a ClassCastException at runtime.
+
+
+	
+List<String> list = new ArrayList<>();
+list.add("Hello");
+String str = list.get(0); // No casting needed
