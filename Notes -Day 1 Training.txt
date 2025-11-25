@@ -294,6 +294,34 @@ create table student_course_2nf (studid numeric, courseid numeric, marks numeric
 
 
 
+My doubts:
+
+Git:
+
+1. git delete command
+2. why no git config again and again..why only one time
+
+3. version control system means
+4. -m means what , -am means what
+
+5. why commit msg we write?
+
+6. git push -u origin main means what?
+
+7. git pull --rebase origin main means?
+
+8. git fetch origin
+git merge origin/main.... difference??
+
+9.# Clone specific branch
+git clone -b branch-name https://github.com/username/repository.git
+  //cloning specific branch means??
+
+10. oneline, graph oneline?
+
+11. merge conflict concept
+
+12.
 
 
 
