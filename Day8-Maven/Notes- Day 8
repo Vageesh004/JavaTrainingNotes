@@ -1,0 +1,125 @@
+Java Training -Notes Day 8
+
+ZonedDateTime
+
+
+Generics:
+
+The main reason for usage of Generics is Collections
+
+
+
+Question: Craete an order class which accepts orders of different type of data
+
+i) give one item
+ii) give array of items... use the same order class for both
+
+Copied from Properties to the Build in the pom. xml file to change the JRE version to 17
+
+
+
+Question: 
+
+
+Generics on Methods:
+
+
+<T> , <K,V> are over... rest of them we will see later in collections
+
+
+
+
+
+Design Patterns:
+
+
+Creational Design Patterns
+
+Structural Design Patterns
+
+Behavioural Design Patterns
+
+
+Creational : 4 types
+
+
+Singleton: If 1000 clients are establishing DB connections separately, cost will be high
+
+so,same instances will be used again....
+
+
+
+
+Factory pattern: some features will be common and we use 
+
+
+Bean - Singleton Pattern
+
+
+Spring- @Application Context , and other and all.. use Factory pattern
+
+
+
+Abstract Factory pattern:
+
+Factory of Factories
+
+Clouds are the best example of this
+
+
+
+Builder Pattern:
+
+Sometimes we need to separately define the data members using n-different constructors... we use build method to do this..
+
+
+For many optional Fields, we use this...
+
+we create the base one..then we use other one..
+
+
+
+Template Pattern:  Parentclass reference to child class object
+
+
+DrinkMaker, some methods are there... some  methods will change...so coffeemaker and teamaker... coffeemaker has some overridden methods..
+
+teamaker has some overridden methods
+
+
+The Singelton pattern works for Single threaded environment only... For Multithreaded environment, we should use synchronized keyword.
+
+
+
+Assignment Questions:
+
+1. Design patterns 
+
+
+
+Morning:
+
+ZonalTime -  10 + functions worked out with a program
+
+Generics - concept explained briefly
+
+Then 2 prgms
+
+i) Container, DemoOnGenerics, Student
+
+ii) DemoOnGenerics, Pair,Order,Item
+
+
+Morning after Break:
+
+
+
+DemoOnGenerics
+
+
+Afternoon:
+
+Design Patterns - 4 types  and Programs
+
+
+
