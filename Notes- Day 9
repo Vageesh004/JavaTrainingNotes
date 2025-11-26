@@ -1,0 +1,309 @@
+26/11 : Java Training  - Notes Day 9
+
+
+Bridge Design Pattern:
+
+
+Example: Video - Youtube , Netflix, Prime
+
+All have 4k, 8k , HD etc.
+
+But there is a Processing class with 4K, 8K,HD ..
+
+We use ProceesingQuality interface  and Video interface
+
+Composition: making one class's thing in another class
+
+
+
+Proxy:  
+
+It is like proxy server
+
+
+Payment : Net banking, UPI ,cc, Cash payment (Real)..
+
+The first three are Proxy
+
+
+Composition: CashPayment is used in UPI and NetBanking classes..
+
+
+
+So, here, Interface called payment with pay method
+
+The classes NetBanking and UPIBanking implements the Payment
+
+there is pay method in these classes also..
+
+
+But CashPayment is actual one... so, we are creating Cash object in the two Classes NetBanking and UPIBanking... and then calling cash.pay()..
+
+
+In the  main method, we are writing parent interface reference assigned to derived class object...
+
+Payment reference to Upi and Netbanking objects..
+
+
+
+Immutable class Creation:
+
+
+The Immutable classes in Java are String, Wrapper classes , LocalDateTime etc.
+
+
+Collection:
+
+A Collection is a group of objects.
+
+Arrays also is a basic collection only but drawbacks are:
+
+i) Homogenous
+
+ii) 
+
+
+
+Iterable is extended by Collection interface.
+
+
+Collection contains List , Queue , Set
+
+List: ArrayList, LinkedList, vector, Stack
+
+Queue: PriorityQueue, Dequeue
+
+
+Map: Map does not come in Iterable.. we can't iterate a map.. directly we can't use iterator it to iterate a map.
+
+Convert it to a set or list like that an then iterate
+
+
+In Collections, there are three things there:
+
+1.Collection
+
+2. Collection Interface
+
+3. Collection class in Util class
+
+
+
+Some classes are there from Java version 1 itself.. Those are called as Legacy classes.
+
+1. Vector , Stack , HashTable are all legacy classes.
+
+
+
+Set: 
+
+List:
+
+List is an Interface
+
+List Interface methods:
+
+
+ArrayList:
+  It's an Implementation class to List Interface
+
+  -> collection of objects
+
+  -> Duplicates allowed
+
+  -> Maintains Insertion order
+
+  -> Used if our frequent operation is retrieval operation as it implements Random..  Interface
+
+   ->The Integer, String or whatever we are adding are not like primitive int etc..  They are objects... bcoz it is collection of Objects
+
+   If we add an integer, It is Wrapped by Integer class.
+
+
+  -> We can't put System.out.println(alist[])... 
+
+    Bcoz, it's dynamic Resizable array...also, It is a class. so, classname. methodname we should put
+
+
+
+Comparable - used for only one level of Sorting
+
+Comparator is used when we have many levels of sorting. When we should do branch wise, then name, then salary wise... comparable can't be used...then name wise you put
+
+
+
+LinkedList:
+
+
+Node:
+
+two parts: data and address of another node .. which is next of type Node
+
+
+head=null -> no linked list
+
+
+
+offerLast: insert at last place
+
+
+
+Double -ended queue: 2 front , 2 back are there
+
+
+We don't use search in linkedlist operation...
+
+
+It's is best choice for frequent insertion and deletion... bcoz not continuous memory
+
+
+
+Vector:
+
+- Has Synchronization
+
+- Multithreads will be there
+
+- Many threads will be there... it makes other threads wait and make it complete the performing thread.. It puts lock to all..
+
+This condition is called Race condition.
+
+
+
+HashSet:
+
+Hashing:
+ For Search operation, we will go here
+
+  
+We store the data in HashTable... we store using Hash function
+
+Let there be table of size 10. 45%10 =5.. 72%10=2
+
+
+
+
+
+//duplicate values are not allowed
+ -> but it will not show any error
+-> it gets replaced with the same value
+
+
+-> no random access... so, get method won't work
+
+//Normal for loop not possible.. bcoz no indexing is there..
+
+so the advanced for loop is possible
+
+
+Linked Hash Set: Linked List + Hash Table
+
+Actually, when 45, 75 are there... we will go to the next index there... linear probing we do
+
+
+But, when we form a linked list and store it on the same row, it is called Linked HashSet.
+
+
+TreeSet: TreeSet maintains the order
+
+so, when you give homogenous data, it will sort as usual
+
+But, when you give heterogenous data, it does n't know by what means , it should compare..
+
+
+Tree Set uses Red-Black tree
+
+This tree uses BST logic
+
+
+
+
+My doubts:
+
+1. Abstract class vs Interface
+
+2. Why Cash is not used as Abstract class in Proxy pattern
+
+3. Today's first pattern
+
+4. Immutable classes.. why no setters...what is the use of these classes..why constructors should be used
+
+5. Collection is class or Interface..Iterable is??
+
+
+6. Generics concept doubt
+
+
+7. Linked List code one doubt
+
+8. LinkedList pop vs peek
+
+9. forEach is from which FunctionalInterface??
+
+10. Red Black Trees
+
+11. Enumeration
+
+12. Entry
+
+13. why on ValueSet on Map, new HashMap(object) is created?
+
+
+Map:
+ Map<K,V>
+
+ Map does not have iterators
+
+ Map is not from the collection...so no add method is there..Rest all have add method
+
+we go for put method
+
+
+TreeMap : Follows Sorted Order
+
+
+//HashMap works on HashTable principle... But Enumeration not works for them.. we convert to Set and do.
+
+
+Question :
+
+1. Create 5 students, add into treeset, and then print the info 
+
+2. TreeMap<Employee,Department> ... how do we insert the data?  Try on own
+
+
+
+
+
+Morning:
+
+Collections basic concepts
+
+
+
+
+Morning after break:
+
+ArrayList 
+
+
+
+
+
+
+
+Afternoon:
+
+LinkedList
+
+HashSet
+
+LinkedHashSet
+
+TreeSet
+
+
+Afternoon after break:
+
+
+
