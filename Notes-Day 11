@@ -1,0 +1,279 @@
+Java Training Notes - Day 11
+
+Different types of IO Streams:
+
+
+Byte Stream : InputStream and OutputStream
+
+
+DemoOnIOStream Program:
+
+1. This fileReader comes in IO Exception, not ByteStream
+
+2. throwsIO Exception:
+
+parent of FileNotFound Exception.. so, we can give IOException itself
+
+
+3.writer.write() will overwrite the content...so to add some new content, put writer.append()
+
+4.
+
+
+
+
+
+
+Difference between CharacterStream and ByteStream is:
+
+we can give only textual data in characterstream but in ByteStream we can give images, objects, any type of data
+
+
+
+If we 
+
+
+
+// Without S
+
+
+
+
+JDBC:
+
+
+Converting Java codes to Database
+
+JDBC Architecture:
+
+
+JDBC Driver:
+
+
+Type 1: JDBC - ODBC Driver
+
+In the control panel,windows tool,  odbc -> Driver -> the details are there
+
+
+Type 2 - Java Native API
+
+These will communicate with the database
+
+
+Type 3 - Java to Network Protocol
+
+
+Third party vendors will be there
+
+They will provide database related APIs
+
+
+Type 4 - Java to Database protocol
+
+
+We are using this
+
+Driver we use is  in the MySQL - connector...
+
+
+// Driver manager creates connection and job is done for us.
+
+// 
+
+
+
+Simple statements:
+
+
+1.executeQuery()
+2. executeUpdate()
+
+
+JDBC:
+
+
+//JDBC Program:
+
+App.java:
+
+
+1. That queries number 1,2,3,4 should be the correct column order in the table of the database
+
+2. 2 ways to execute the queries.. 
+
+
+
+CRUD Operations:
+
+
+
+Thread:
+
+Why 2 methods we use: extends Thread
+
+implements Runnable...
+
+
+
+
+
+Prgm 3 - BankThread :
+
+
+1. mam is saying , like user1 , user2 withdraws randomly, but next balance statement, we don't know, it is for whom...so we use synchronized
+
+synchronized can be used at method level. . after thread 1 completes it's execution fully, thread2 executes..
+
+
+2. muTex: 
+
+3. we don't need to put Synchronized for whole method..inside a method, for a particular block, i.e critical section alone, we can put synchronized
+
+
+
+
+SDLC:
+
+1. Planning
+
+2. Requirements
+
+   Functional : Both Frontend and Backend should be in coincidence
+
+   Non- Functional : speed checks, quality checks, security checks, Encrypted or not like that we will check
+
+3. Design
+
+	
+4. Devolopment: Devolopment and Unit Testing
+
+5. Testing:
+
+   Unit testing
+
+   Integration testing
+
+   UAT
+
+   Regression Testing: Again they rerun the application and check whether all are working correctly or not
+
+   Performance Testing
+
+
+
+6. Deployment : 
+
+   Big bang
+
+   Phased 
+
+   Parallel- Already few things are there. 
+
+
+7. Maintainence  
+
+   Corrective
+
+   Adaptive - we use different OS.. we check whether it adapts
+
+   Perfective
+
+   Preventive
+
+
+
+SDLC Models:
+
+Waterfall Model - Linear and Sequential model
+
+Agile model - Iterative and Incremental model
+
+We use Sprints here
+
+We use this when requirements are changing
+
+
+Spiral model - 
+
+V - model : Extension of Waterfall model, plus Verification and validation of each phase
+
+Prototype model - 
+
+   
+
+Project Manaagement :
+
+They will check whether software is managed on time..
+
+
+	
+
+
+Questions:
+
+1. Implement a scenario that uses multithreading that assumes   number of chefs as threads ,and manages chefs to complete the orders of the restaurant
+
+
+
+Assignment Questions:
+
+1. JDBC crud program - do delete statement
+
+
+
+
+
+Morning:
+
+Merge Sort
+
+Quick Sort
+
+DemoOnFiles
+
+
+
+Morning after break:
+
+One prgm : 3 concepts
+
+CharacterStream
+
+ByteStream
+
+ObjectStream
+
+
+JDBC:
+
+MySQL - connector program
+
+Then Query adding in that program
+
+
+
+AfterNoon:
+
+
+JDBC First prgm  -remaining
+
+JDBC CRUD operations prgm
+
+JDBC Callable prgm
+
+Threads started - App.java
+
+
+
+Afternoon after break:
+
+Extends Thread prgm
+
+Runnable Interface demo prgm
+
+BankAccount prgm
+
+Chef Prgm
+
+ChefES prgm
+
