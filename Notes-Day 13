@@ -1,0 +1,162 @@
+Java Training - Notes Day 13
+
+
+
+Http: Stateless
+
+Not store any information
+
+For this, in Servelets and JSP, we use
+
+-> Cookies - 4 kb .......  webstorage
+
+-> URL - 
+
+-> Hiddenform
+
+-> Session
+
+
+
+Webstorage: Local Storage and Session Storage
+
+Local Storage: if the session is closed, it will be gone
+
+Session storage: it is stored always
+
+
+
+Validation 
+
+Authentication
+
+Authorization
+
+
+
+
+Session: Token
+
+
+Application Server - WebLogic
+
+Web Server - Apache Tomcat
+
+Light Weighted Appln Server - Jetty
+
+
+
+We have seen about plugins:
+
+someother things we should see
+
+
+
+Profile: In all sites, our appln should work..like in development environment, test environment, server etc.
+
+
+
+For Servelet:
+
+From maven website, type Jakarta servelet, java servelet, get versions 5.0 and 4.0 respectively...
+
+
+Then, add in pom.xml dependencies
+
+Then, right click on project, debug as:
+
+In goals , give: clean install
+
+Then, debug..then apply...
+
+
+Then,right click, maven clean
+
+Then, right click, maven update, click tickbox force update..
+
+
+Then, that's it..
+
+
+Then, the java folder is not showing.. for that, create a java folder
+
+
+
+
+
+
+Servelet Api: Life Cycle methods - init, service, destroy .. along with this servelet config and servlet info will be there
+
+Generic servlet class.. implements that
+
+Http Servlet extends it - do get(), do post()
+
+
+HelloServlet extends Http Servlet
+
+
+
+Html Forms get and post difference:
+
+get means the data will be passed in the URL itself
+
+post means the data will be passed in the request body..
+
+
+so, use dopost for security purposes
+
+
+
+1 . PrintWriter prgm:
+
+1.servelet: java will have html code
+
+
+jsp: html has java code
+
+
+2.
+
+
+
+For Running the prgm:
+
+we use 
+
+
+Add tomcat dependency in pom.xml from the maven
+
+tomcat -embed you add
+
+
+
+2. LoginServlet prgm
+
+1. The data is on the request url..bcoz it is get method..
+
+
+3. Going to another page
+
+
+1. Login -> Login servlet.. if successful, go to welcome.jsp.. else , go to error.jsp
+
+we are using jasper dependency
+
+
+
+JSP:
+
+% -> declarations
+
+<% -> sciptlet tag
+
+Inside jsp, we can't write java code directly.. we use scriptlets
+
+Whatever we write inside <%  %> (Scriptlet) will be exceuted on the Servlet container
+
+Whatever we write at top on <% at jsp file, that will be run on jsp container
+
+
+
+
+Servlet Config and Servlet Context:
