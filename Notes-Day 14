@@ -1,0 +1,128 @@
+ Java Training Notes - Day 14
+
+
+@webservlet - before some time, we did manual configuration in web.xml 
+
+But now we are putting this through Annotation based
+
+
+
+
+Filters:
+
+Filter has doFilter method
+
+doFilter has 3 methods
+
+
+some other thing is there: that is log
+
+
+resources folder is not there
+
+
+Servlet : init, service, destroy
+Filter : init, doFilter , destroy
+
+
+JSP: jsp will be converted to Servlet and then servlet will run
+
+
+Directives:
+
+1.Page directives and 2. Include directives
+
+
+
+
+Program 1 today:
+
+1.
+
+
+
+
+
+Filter prgm:
+
+1. The filter will run by default
+
+
+
+
+Listener prgm:
+
+1.
+
+
+
+JSP Prgm:
+
+1. Function call prgm in index.jsp
+
+2.Include directive prgm
+
+ - we can include at any point, but generally in top we give include line
+
+3.using welcome.jsp and index.jsp
+
+4.using above 2 and login.jsp also
+
+<!--  <h3>Username: <%=request.getParameter("uname") %></h3>
+	<h3>Password: <%=request.getParameter("pwd") %></h3> -->
+
+
+5.  using 3 + success.jsp and error.jsp
+
+
+6. empForm.jsp:
+
+   -> we cannot use Session object in the page where we enter the details
+
+   -> form data we get in data.jsp 
+
+
+7.Exception.jsp
+
+8. ExceptionDemo.jsp
+
+
+
+
+Assignment Questions:
+
+1.Crud operations of student table from our application.. complete using servlet application
+
+2. Using HttpSessionListener Interface
+
+3. JSP with jdbc
+
+  set config value
+
+	Student-info
+
+	
+
+
+Morning:
+
+upto 10 - test
+
+Then 
+
+
+Morning after break:
+
+Filters
+
+
+
+Afternoon:
+
+Listeners
+
+
+Afternoon after break:
+
+JSP
+
