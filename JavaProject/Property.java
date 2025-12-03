@@ -1,65 +1,47 @@
 package com.project2.CoreJavaProj;
 
-import interfaces.TaxCalculator;
 
-public class Property implements TaxCalculator{
-	private double builtUpArea;
-	private double baseValue;
-	private int ageOfConstruction;
-	private boolean isInCity;
-	
-	public Property(double builtUpArea, double baseValue, int ageOfConstruction, boolean isInCity) {
-		super();
-		this.builtUpArea = builtUpArea;
-		this.baseValue = baseValue;
-		this.ageOfConstruction = ageOfConstruction;
-		this.isInCity = isInCity;
-	}
+public class Property {
 
-	public Property() {
-		super();
-	}
-	
+    private int propertyId;
+    private double builtUpArea;
+    private double baseValue;
+    private boolean inCity;
+    private int ageOfConstruction;
+    private String locality;
 
-	public double getBuiltUpArea() {
-		return builtUpArea;
-	}
+    public Property(int propertyId, double builtUpArea, double baseValue,
+                    boolean inCity, int ageOfConstruction, String locality) {
 
-	public void setBuiltUpArea(double builtUpArea) {
-		this.builtUpArea = builtUpArea;
-	}
+        this.propertyId = propertyId;
+        this.builtUpArea = builtUpArea;
+        this.baseValue = baseValue;
+        this.inCity = inCity;
+        this.ageOfConstruction = ageOfConstruction;
+        this.locality = locality;
+    }
 
-	public double getBaseValue() {
-		return baseValue;
-	}
+    public int getPropertyId() {
+        return propertyId;
+    }
 
-	public void setBaseValue(double baseValue) {
-		this.baseValue = baseValue;
-	}
+    public double getBuiltUpArea() {
+        return builtUpArea;
+    }
 
-	public int getAgeOfConstruction() {
-		return ageOfConstruction;
-	}
+    public double getBaseValue() {
+        return baseValue;
+    }
 
-	public void setAgeOfConstruction(int ageOfConstruction) {
-		this.ageOfConstruction = ageOfConstruction;
-	}
+    public boolean isInCity() {
+        return inCity;
+    }
 
-	public boolean isInCity() {
-		return isInCity;
-	}
+    public int getAgeOfConstruction() {
+        return ageOfConstruction;
+    }
 
-	public void setInCity(boolean isInCity) {
-		this.isInCity = isInCity;
-	}
-
-	@Override
-	public String toString() {
-		return "Property [builtUpArea=" + builtUpArea + ", baseValue=" + baseValue + ", ageOfConstruction="
-				+ ageOfConstruction + ", isInCity=" + isInCity + "]";
-	}
-	
-	
-	
-	
+    public String getLocality() {
+        return locality;
+    }
 }
