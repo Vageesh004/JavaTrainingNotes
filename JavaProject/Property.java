@@ -1,7 +1,7 @@
 package com.project2.CoreJavaProj;
 
 
-public class Property {
+public class Property{
 
     private int propertyId;
     private double builtUpArea;
@@ -11,7 +11,7 @@ public class Property {
     private String locality;
 
     public Property(int propertyId, double builtUpArea, double baseValue,
-                    boolean inCity, int ageOfConstruction, String locality) {
+                    boolean inCity, int ageOfConstruction, String locality){
 
         this.propertyId = propertyId;
         this.builtUpArea = builtUpArea;
@@ -44,4 +44,6 @@ public class Property {
     public String getLocality() {
         return locality;
     }
+    
+    
 }
