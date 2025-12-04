@@ -296,3 +296,53 @@ public class UpdateStudent extends HttpServlet {
     }
 }
 
+<html>
+<body>
+
+<h2>Add Student</h2>
+
+<form action="insert" method="post">
+    Name: <input type="text" name="name" required>
+    <input type="submit" value="Save">
+</form>
+
+<hr>
+
+<a href="list">Show All Students</a>
+
+</body>
+</html>
+
+
+
+<html>
+<body>
+
+<h2>All Students</h2>
+
+<a href="index.jsp">Add New Student</a>
+<br><br>
+
+<table border="1">
+<tr><th>ID</th><th>Name</th><th>Actions</th></tr>
+
+<%
+    ResultSet rs = (ResultSet) request.getAttribute("data");
+
+    while (rs.next()) {
+%>
+<tr>
+    <td><%= rs.getInt("id") %></td>
+    <td><%= rs.getString("name") %></td>
+    <td>
+        <a href="edit.jsp?id=<%=rs.getInt("id")%>&name=<%=rs.getString("name")%>">Edit</a> |
+        <a href="delete?id=<%=rs.getInt("id")%>">Delete</a>
+    </td>
+</tr>
+<%
+    }
+%>
+</table>
+
+</body>
+</html>
