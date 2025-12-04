@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class VehicleService {
+public class VehicleService implements TaxCalculator{
 
     private List<Vehicle> vehicles = new ArrayList<>();
 
@@ -19,17 +19,19 @@ public class VehicleService {
     }
 
     // Calculate tax for specific vehicle
-    public double calculateTax(Vehicle v) {
+    public double calculateTax() {
 
         double base = v.getMaxVelocity() + v.getCapacity();
         double cost = v.getPurchaseCost();
 
         double taxPercent;
+        
+        
 
         switch (v.getFuelType()) {
-            case 1: taxPercent = 0.10; break; // Petrol
-            case 2: taxPercent = 0.11; break; // Diesel
-            case 3: taxPercent = 0.12; break; // CNG/LPG
+            case "Petrol": taxPercent = 0.10; break; // Petrol
+            case "Diesel": taxPercent = 0.11; break; // Diesel
+            case "CNG/LPG": taxPercent = 0.12; break; // CNG/LPG
             default: taxPercent = 0.0; // Should never occur if validated
         }
 
