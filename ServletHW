@@ -128,3 +128,27 @@ public class StudentCrudServlet extends HttpServlet {
         }
     }
 }
+
+package com.project;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+import com.project.StudentDAO;
+
+@WebServlet("/StudentServlet")
+public class StudentServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String name = request.getParameter("name");
+        int age = Integer.parseInt(request.getParameter("age"));
+
+        StudentDAO dao = new StudentDAO();
+        dao.insertStudent(name, age);
+
+        response.sendRedirect("success.jsp");
+    }
+}
