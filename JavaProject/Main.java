@@ -64,21 +64,28 @@ public class Main {
     private static void propertyUI() {
         System.out.println("\n--- PROPERTY TAX CALCULATION ---");
 
+        System.out.print("Property: ");
+        int propertyId = sc.nextInt();
+        
         System.out.print("Enter built-up area: ");
-        double area = sc.nextDouble();
-
-        System.out.print("Enter age factor: ");
-        double ageFactor = sc.nextDouble();
-
-        System.out.print("Enter base value of the land: ");
+        double builtUpArea= sc.nextDouble();
+        
+        
+        System.out.print("Enter base value: ");
         double baseValue = sc.nextDouble();
 
         System.out.print("Is property inside main city? (yes/no): ");
         String cityInput = sc.next();
         boolean isCity = cityInput.equalsIgnoreCase("yes");
 
+        System.out.print("Enter age of construction: ");
+        int ageOfConstruction = sc.nextInt();
+
+        System.out.print("Enter locality: ");
+        String locality = sc.next();
+
         // Create property object
-        Property p = new Property(area, ageFactor, baseValue, isCity);
+        Property p = new Property(propertyId, builtUpArea, baseValue, isCity,ageOfConstruction,locality);
 
         double tax = p.calculateTax();
         System.out.println("Calculated Property Tax: " + tax);
@@ -97,25 +104,30 @@ public class Main {
         System.out.println("\n--- VEHICLE TAX CALCULATION ---");
 
         System.out.print("Enter registration number: ");
-        String regNo = sc.next();
-
+        int vehicleId = sc.nextInt();
+        
+        System.out.print("Enter registration number: ");
+        String registrationNumber = sc.next();
+        
+        
         System.out.print("Enter brand: ");
         String brand = sc.next();
 
         System.out.print("Enter purchase cost: ");
-        double cost = sc.nextDouble();
+        double purchaseCost = sc.nextDouble();
 
         System.out.print("Enter maximum velocity: ");
-        double velocity = sc.nextDouble();
+        int maxVelocity = sc.nextInt();
 
         System.out.print("Enter capacity (no. of seats): ");
         int capacity = sc.nextInt();
 
         System.out.print("Enter vehicle type (petrol/diesel/cng): ");
-        String type = sc.next();
+        String fuelType = sc.next();
 
         // Create vehicle object
-        Vehicle v = new Vehicle(regNo, brand, cost, velocity, capacity, type);
+        Vehicle v = new Vehicle(vehicleId, registrationNumber, brand, purchaseCost, maxVelocity, capacity, 
+        		fuelType);
 
         double tax = v.calculateTax();
         System.out.println("Calculated Vehicle Tax: " + tax);
