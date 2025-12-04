@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class PropertyService {
+public class PropertyService implements TaxCalculator{
 
     private List<Property> properties = new ArrayList<>();
 
@@ -19,7 +19,7 @@ public class PropertyService {
     }
 
     // Calculate tax for a specific property
-    public double calculateTax(Property p) {
+    public double calculateTax() {
 
         double ageFactor = 1 + (p.getAgeOfConstruction() * 0.01); 
         double baseTax = p.getBuiltUpArea() * ageFactor * p.getBaseValue();
