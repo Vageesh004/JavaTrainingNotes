@@ -1,0 +1,130 @@
+import java.io.*;
+import java.sql.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
+
+@WebServlet("/students")
+public class StudentCrudServlet extends HttpServlet {
+
+    // DB connection details (edit if needed)
+    private static final String URL = "jdbc:mysql://localhost:3306/test";
+    private static final String USER = "root";
+    private static final String PASS = "password";
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+
+        resp.setContentType("text/html");
+        PrintWriter out = resp.getWriter();
+
+        String action = req.getParameter("action");
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(URL, USER, PASS);
+
+            if (action == null) action = "list";
+
+            // -------- LIST --------
+            if (action.equals("list")) {
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery("SELECT * FROM student");
+
+                out.println("<h2>Student List</h2>");
+                out.println("<a href='students?action=addForm'>Add Student</a><br><br>");
+                out.println("<table border='1' cellpadding='5'>");
+                out.println("<tr><th>ID</th><th>Name</th><th>Age</th><th>Actions</th></tr>");
+
+                while (rs.next()) {
+                    out.println("<tr>");
+                    out.println("<td>" + rs.getInt("id") + "</td>");
+                    out.println("<td>" + rs.getString("name") + "</td>");
+                    out.println("<td>" + rs.getInt("age") + "</td>");
+                    out.println("<td>"
+                            + "<a href='students?action=editForm&id=" + rs.getInt("id") + "'>Edit</a> | "
+                            + "<a href='students?action=delete&id=" + rs.getInt("id") + "'>Delete</a>"
+                            + "</td>");
+                    out.println("</tr>");
+                }
+                out.println("</table>");
+            }
+
+            // -------- SHOW ADD FORM --------
+            else if (action.equals("addForm")) {
+                out.println("<h2>Add Student</h2>");
+                out.println("<form action='students' method='get'>");
+                out.println("Name: <input type='text' name='name'><br>");
+                out.println("Age: <input type='number' name='age'><br>");
+                out.println("<input type='hidden' name='action' value='add'>");
+                out.println("<input type='submit' value='Save'>");
+                out.println("</form>");
+            }
+
+            // -------- ADD STUDENT --------
+            else if (action.equals("add")) {
+                String name = req.getParameter("name");
+                int age = Integer.parseInt(req.getParameter("age"));
+
+                PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO student(name, age) VALUES (?, ?)");
+                ps.setString(1, name);
+                ps.setInt(2, age);
+                ps.executeUpdate();
+
+                resp.sendRedirect("students");
+            }
+
+            // -------- SHOW EDIT FORM --------
+            else if (action.equals("editForm")) {
+                int id = Integer.parseInt(req.getParameter("id"));
+
+                PreparedStatement ps = con.prepareStatement("SELECT * FROM student WHERE id=?");
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                rs.next();
+
+                out.println("<h2>Edit Student</h2>");
+                out.println("<form action='students' method='get'>");
+                out.println("<input type='hidden' name='id' value='" + id + "'>");
+                out.println("Name: <input type='text' name='name' value='" + rs.getString("name") + "'><br>");
+                out.println("Age: <input type='number' name='age' value='" + rs.getInt("age") + "'><br>");
+                out.println("<input type='hidden' name='action' value='update'>");
+                out.println("<input type='submit' value='Update'>");
+                out.println("</form>");
+            }
+
+            // -------- UPDATE STUDENT --------
+            else if (action.equals("update")) {
+                int id = Integer.parseInt(req.getParameter("id"));
+                String name = req.getParameter("name");
+                int age = Integer.parseInt(req.getParameter("age"));
+
+                PreparedStatement ps = con.prepareStatement(
+                        "UPDATE student SET name=?, age=? WHERE id=?");
+                ps.setString(1, name);
+                ps.setInt(2, age);
+                ps.setInt(3, id);
+                ps.executeUpdate();
+
+                resp.sendRedirect("students");
+            }
+
+            // -------- DELETE STUDENT --------
+            else if (action.equals("delete")) {
+                int id = Integer.parseInt(req.getParameter("id"));
+
+                PreparedStatement ps = con.prepareStatement(
+                        "DELETE FROM student WHERE id=?");
+                ps.setInt(1, id);
+                ps.executeUpdate();
+
+                resp.sendRedirect("students");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            out.println("<p>Error: " + e.getMessage() + "</p>");
+        }
+    }
+}
