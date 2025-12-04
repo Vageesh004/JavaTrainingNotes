@@ -152,3 +152,65 @@ public class StudentServlet extends HttpServlet {
         response.sendRedirect("success.jsp");
     }
 }
+
+
+
+web.xml
+
+
+<web-app>
+
+    <!-- DB PARAMETERS -->
+    <context-param>
+        <param-name>dbURL</param-name>
+        <param-value>jdbc:mysql://localhost:3306/test</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>dbUser</param-name>
+        <param-value>root</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>dbPassword</param-name>
+        <param-value>password</param-value>
+    </context-param>
+
+    <!-- SERVLET MAPPINGS -->
+    <servlet>
+        <servlet-name>insert</servlet-name>
+        <servlet-class>com.servlet.InsertStudent</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>insert</servlet-name>
+        <url-pattern>/insert</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>update</servlet-name>
+        <servlet-class>com.servlet.UpdateStudent</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>update</servlet-name>
+        <url-pattern>/update</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>delete</servlet-name>
+        <servlet-class>com.servlet.DeleteStudent</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>delete</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>list</servlet-name>
+        <servlet-class>com.servlet.ListStudent</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>list</servlet-name>
+        <url-pattern>/list</url-pattern>
+    </servlet-mapping>
+
+</web-app>
