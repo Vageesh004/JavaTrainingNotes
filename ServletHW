@@ -214,3 +214,85 @@ web.xml
     </servlet-mapping>
 
 </web-app>
+
+
+
+package com.util;
+
+import java.sql.*;
+import javax.naming.*;
+import javax.servlet.*;
+
+public class DBUtil {
+
+    public static Connection getConnection(ServletContext context) throws Exception {
+        String url = context.getInitParameter("dbURL");
+        String user = context.getInitParameter("dbUser");
+        String pass = context.getInitParameter("dbPassword");
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        return DriverManager.getConnection(url, user, pass);
+    }
+}
+
+
+
+package com.servlet;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.sql.*;
+import com.util.DBUtil;
+
+public class InsertStudent extends HttpServlet {
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        String name = req.getParameter("name");
+
+        try {
+            Connection con = DBUtil.getConnection(getServletContext());
+            PreparedStatement ps = con.prepareStatement(
+                "INSERT INTO student(name) VALUES (?)");
+            ps.setString(1, name);
+            ps.executeUpdate();
+            resp.sendRedirect("list");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+package com.servlet;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.sql.*;
+import com.util.DBUtil;
+
+public class UpdateStudent extends HttpServlet {
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        int id = Integer.parseInt(req.getParameter("id"));
+        String name = req.getParameter("name");
+
+        try {
+            Connection con = DBUtil.getConnection(getServletContext());
+            PreparedStatement ps = con.prepareStatement(
+                "UPDATE student SET name=? WHERE id=?");
+            ps.setString(1, name);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+            resp.sendRedirect("list");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
