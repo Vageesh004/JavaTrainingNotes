@@ -1,6 +1,6 @@
 package com.project2.CoreJavaProj;
 
-public class Vehicle {
+public class Vehicle{
 
     private int vehicleId;
     private String registrationNumber;
@@ -8,10 +8,10 @@ public class Vehicle {
     private double purchaseCost;
     private int maxVelocity;
     private int capacity;
-    private int fuelType; // 1 = Petrol, 2 = Diesel, 3 = CNG/LPG
+    private String fuelType; // 1 = Petrol, 2 = Diesel, 3 = CNG/LPG
 
     public Vehicle(int vehicleId, String registrationNumber, String brand,
-                   double purchaseCost, int maxVelocity, int capacity, int fuelType) {
+                   double purchaseCost, int maxVelocity, int capacity, String fuelType) {
 
         this.vehicleId = vehicleId;
         this.registrationNumber = registrationNumber;
@@ -46,7 +46,9 @@ public class Vehicle {
         return capacity;
     }
 
-    public int getFuelType() {
+    public String getFuelType() {
         return fuelType;
     }
+    
+    
 }
