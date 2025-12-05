@@ -107,4 +107,24 @@ public class Vehicle{
     	return vehicleTax;
     }
     
+    
+    public int getVehicleId() {
+    	return vehicleId;
+    }
+    
+    public void setVehicleId() {
+    	this.vehicleId=vehicleId;
+    }
+
+
+
+	@Override
+	public String toString() {
+		return "Vehicle [vehicleId=" + vehicleId + ", registrationNumber=" + registrationNumber + ", brand=" + brand
+				+ ", purchaseCost=" + purchaseCost + ", maxVelocity=" + maxVelocity + ", capacity=" + capacity
+				+ ", fuelType=" + fuelType + ", vehicleTax=" + vehicleTax + "]";
+	}
+    
+    
 }
+
