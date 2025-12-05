@@ -18,8 +18,11 @@ public class VehicleService implements TaxCalculator{
         return vehicles;
     }
 
+    @Override
     // Calculate tax for specific vehicle
-    public double calculateTax() {
+    public double calculateTax(Object obj) {
+    	
+    	Vehicle v=(Vehicle) obj;
 
         double base = v.getMaxVelocity() + v.getCapacity();
         double cost = v.getPurchaseCost();
