@@ -6,13 +6,20 @@ package com.project2.CoreJavaProj;
 import java.util.*;
 
 public class Main {
-
+	
+	
     private static List<Property> properties = new ArrayList<>();
     private static List<Vehicle> vehicles = new ArrayList<>();
 
     private static Scanner sc = new Scanner(System.in);
+    
+    private static final String USERNAME = "admin";
+    private static final String PASSWORD = "1234";
+
 
     public static void main(String[] args) {
+    	
+    	loginScreen();
 
         while (true) {
             displayWelcomeScreen();
@@ -20,11 +27,11 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    propertyUI();
+                    propertyMenu();
                     break;
 
                 case 2:
-                    vehicleUI();
+                    vehicleMenu();
                     break;
 
                 case 3:
@@ -32,153 +39,77 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.println("\nThank you for using the Tax Management Application.");
-                    System.out.println("Closing application...");
+                	System.out.println("\nTHANK YOU FOR USING THE TAX MANAGEMENT APPLICATION.");
+                    System.out.println("CLOSING APPLICATION...");
                     return;
 
                 default:
-                    System.out.println("Invalid choice. Try again.");
+                	System.out.println("INVALID CHOICE. TRY AGAIN.");
             }
         }
     }
-
+    
+ // ---------------------------------------------------------
+    // LOGIN SCREEN
     // ---------------------------------------------------------
-    // WELCOME SCREEN
-    // ---------------------------------------------------------
-    private static void displayWelcomeScreen() {
-        System.out.println("\n=======================================");
-        System.out.println("      TAX MANAGEMENT APPLICATION");
-        System.out.println("      Developer: VAGEESH S");
-        System.out.println("=======================================");
-        System.out.println("User Interface Options:");
-        System.out.println("1. Property Tax Calculator");
-        System.out.println("2. Vehicle Tax Calculator");
-        System.out.println("3. Display All Records");
-        System.out.println("4. Exit Application");
-        System.out.print("Enter your choice: ");
-    }
+    private static void loginScreen() {
 
-    // ---------------------------------------------------------
-    // PROPERTY USER INTERFACE
-    // ---------------------------------------------------------
-    private static void propertyUI() {
-        System.out.println("\n--- PROPERTY TAX CALCULATION ---");
+        System.out.println("===============================================");
+        System.out.println("|          WELCOME TO TAX CALCULATION APP     |");
+        System.out.println("===============================================");
+        System.out.println("|            PLEASE LOGIN TO CONTINUE         |");
+        System.out.println("===============================================");
 
-        System.out.print("Property: ");
-        int propertyId = sc.nextInt();
-        
-        System.out.print("Enter built-up area: ");
-        double builtUpArea= sc.nextDouble();
-        
-        
-        System.out.print("Enter base value: ");
-        double baseValue = sc.nextDouble();
+        while (true) {
+            System.out.print("ENTER USERNAME : ");
+            String uname = sc.next();
 
-        System.out.print("Is property inside main city? (yes/no): ");
-        String cityInput = sc.next();
-        boolean isCity = cityInput.equalsIgnoreCase("yes");
+            System.out.print("ENTER PASSWORD : ");
+            String pwd = sc.next();
 
-        System.out.print("Enter age of construction: ");
-        int ageOfConstruction = sc.nextInt();
-
-        System.out.print("Enter locality: ");
-        String locality = sc.next();
-
-        // Create property object
-        Property p = new Property(propertyId, builtUpArea, baseValue, isCity,ageOfConstruction,locality);
-
-        double tax = p.calculateTax();
-        System.out.println("Calculated Property Tax: " + tax);
-
-        System.out.print("Save this property? (yes/no): ");
-        if (sc.next().equalsIgnoreCase("yes")) {
-            properties.add(p);
-            System.out.println("Property saved.");
-        }
-    }
-
-    // ---------------------------------------------------------
-    // VEHICLE USER INTERFACE
-    // ---------------------------------------------------------
-    private static void vehicleUI() {
-        System.out.println("\n--- VEHICLE TAX CALCULATION ---");
-
-        System.out.print("Enter registration number: ");
-        int vehicleId = sc.nextInt();
-        
-        System.out.print("Enter registration number: ");
-        String registrationNumber = sc.next();
-        
-        
-        System.out.print("Enter brand: ");
-        String brand = sc.next();
-
-        System.out.print("Enter purchase cost: ");
-        double purchaseCost = sc.nextDouble();
-
-        System.out.print("Enter maximum velocity: ");
-        int maxVelocity = sc.nextInt();
-
-        System.out.print("Enter capacity (no. of seats): ");
-        int capacity = sc.nextInt();
-
-        System.out.print("Enter vehicle type (petrol/diesel/cng): ");
-        String fuelType = sc.next();
-
-        // Create vehicle object
-        Vehicle v = new Vehicle(vehicleId, registrationNumber, brand, purchaseCost, maxVelocity, capacity, 
-        		fuelType);
-
-        double tax = v.calculateTax();
-        System.out.println("Calculated Vehicle Tax: " + tax);
-
-        System.out.print("Save this vehicle? (yes/no): ");
-        if (sc.next().equalsIgnoreCase("yes")) {
-            vehicles.add(v);
-            System.out.println("Vehicle saved.");
-        }
-    }
-
-    // ---------------------------------------------------------
-    // DISPLAY RECORDS USER INTERFACE
-    // ---------------------------------------------------------
-    private static void displayRecordsUI() {
-        System.out.println("\n=========== STORED RECORDS ===========");
-
-        if (properties.isEmpty() && vehicles.isEmpty()) {
-            System.out.println("No Data Present at This Moment.");
-        } else {
-            double totalPropTax = 0;
-            double totalVehTax = 0;
-
-            System.out.println("\n--- Properties ---");
-            if (properties.isEmpty()) {
-                System.out.println("No Property Data.");
+            if (uname.equals(USERNAME) && pwd.equals(PASSWORD)) {
+                System.out.println("\nLOGIN SUCCESSFUL!\n");
+                break;
             } else {
-                for (Property p : properties) {
-                    System.out.println(p + " | Tax: " + p.calculateTax());
-                    totalPropTax += p.calculateTax();
-                }
-                System.out.println("Total Properties: " + properties.size());
-                System.out.println("Total Property Tax: " + totalPropTax);
+                System.out.println("\nINVALID CREDENTIALS! PLEASE TRY AGAIN.\n");
             }
-
-            System.out.println("\n--- Vehicles ---");
-            if (vehicles.isEmpty()) {
-                System.out.println("No Vehicle Data.");
-            } else {
-                for (Vehicle v : vehicles) {
-                    System.out.println(v + " | Tax: " + v.calculateTax());
-                    totalVehTax += v.calculateTax();
-                }
-                System.out.println("Total Vehicles: " + vehicles.size());
-                System.out.println("Total Vehicle Tax: " + totalVehTax);
-            }
-
-            System.out.println("\nTOTAL TAX PAYABLE = " + (totalPropTax + totalVehTax));
         }
-
-        System.out.println("\nPress any key to return to main menu...");
-        sc.next();
     }
-}
+    
+    
+    // ---------------------------------------------------------
+    // MAIN MENU (TABULAR FORMAT)
+    // ---------------------------------------------------------
+    
+    private static void displayMainMenu() {
+
+        System.out.println("===================================================");
+        System.out.println("|                MAIN MENU OPTIONS                |");
+        System.out.println("===================================================");
+        System.out.println("| 1. PROPERTY TAX                                 |");
+        System.out.println("| 2. VEHICLE TAX                                  |");
+        System.out.println("| 3. DISPLAY TOTAL RECORDS                        |");
+        System.out.println("| 4. EXIT                                         |");
+        System.out.println("===================================================");
+        System.out.print("ENTER YOUR CHOICE : ");
+    }
+
+    // ---------------------------------------------------------
+    // ---------------------------------------------------------
+    // PROPERTY MENU
+    // ---------------------------------------------------------
+    private static void propertyMenu() {
+
+        while (true) {
+            System.out.println("===================================================");
+            System.out.println("|                PROPERTY MENU                    |");
+            System.out.println("===================================================");
+            System.out.println("| 1. ADD PROPERTY DETAILS                         |");
+            System.out.println("| 2. CALCULATE PROPERTY TAX                       |");
+            System.out.println("| 3. DISPLAY ALL PROPERTIES                       |");
+            System.out.println("| 4. BACK TO MAIN MENU                            |");
+            System.out.println("===================================================");
+            System.out.print("ENTER YOUR CHOICE : ");
+            
+        }
+        
