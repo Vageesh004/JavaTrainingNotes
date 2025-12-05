@@ -9,7 +9,7 @@ public class PropertyService implements TaxCalculator{
     private List<Property> properties = new ArrayList<>();
 
     // Add property
-    public void addProperty(Property property) {
+    public void addPropertyUI(Property property) {
         properties.add(property);
     }
 
@@ -18,16 +18,24 @@ public class PropertyService implements TaxCalculator{
         return properties;
     }
 
+    @Override
     // Calculate tax for a specific property
-    public double calculateTax() {
+    public double calculateTax(Object obj) {
+    	
+    	if(!(obj instanceof Property)) {
+    		throw new IllegalArgumentException("Invalid object,property expected");
+    		
+    	}
+    	
+    	Property p=(Property) obj;
 
         double ageFactor = 1 + (p.getAgeOfConstruction() * 0.01); 
         double baseTax = p.getBuiltUpArea() * ageFactor * p.getBaseValue();
 
-        if (p.isInCity()) {
+        if (p.isCity()) {
             baseTax += (0.5 * p.getBuiltUpArea());
         }
-
+        
         return Math.round(baseTax * 100.0) / 100.0; // Two decimals
     }
 
