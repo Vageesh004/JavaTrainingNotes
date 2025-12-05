@@ -70,7 +70,21 @@ public class Property{
 		this.propertyTax = propertyTax;
 	}
 
-
+	public int getPropertyId() {
+    	return propertyId;
+    }
+    
+    public void setVehicleId() {
+    	this.propertyId=propertyId;
+    }
+	@Override
+	public String toString() {
+		return "Property [propertyId=" + propertyId + ", builtUpArea=" + builtUpArea + ", baseValue=" + baseValue
+				+ ", isCity=" + isCity + ", ageOfConstruction=" + ageOfConstruction + ", locality=" + locality
+				+ ", propertyTax=" + propertyTax + "]";
+	}
+    
     
     
 }
+
