@@ -1,38 +1,24 @@
-package com.dec8Hibernate.Dec8_Hibernate;
+package com.dec8hibern;
 
-import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
-import org.hibernate.Transaction;
-
-import dec8Hiber.model.Student;
-import dec8Hiber.util.HibernateUtil;
-
+import com.dec8hibern.dao.OrderDao;
+import com.dec8hibern.model.Order;
 /**
  * Hello world!
  */
 public class App {
     public static void main(String[] args) {
-        SessionFactory factory=HibernateUtil.getSessionFactory();
-        Session session=factory.openSession();
-        Transaction tx=session.beginTransaction();
+        OrderDao dao=new OrderDao();
         
-        Student s=new Student(123,"Vageesh","Java");
-        session.save(s);
+        //dao.addOrder();
         
-        System.out.println("added successfully");
-        tx.commit();
+        dao.findAllOrders().forEach(System.out::println);
+        
+        Order o3=new Order(125,"2025-12-8",190,"Ice cream");
+        //dao.updateOrder(o3, 125);
+        
+        dao.deleteOrder(123);
         
         
-        //retreive all student
-        List<Student> studList=session.createQuery("From Student",Student.class).list();
-        for(Student s1:studList)
-        	System.out.println(s1);
-        
-        session.close();
-        factory.close();
         
         
     }
