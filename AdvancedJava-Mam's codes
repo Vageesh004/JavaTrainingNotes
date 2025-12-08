@@ -1,0 +1,395 @@
+December 1 st
+
+HelloServlet.java
+
+package com.mphasis;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+
+/**
+ * Servlet implementation class HelloServlet
+ */
+@WebServlet("/HelloServlet")
+public class HelloServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    /**
+     * Default constructor. 
+     */
+    public HelloServlet() {
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		PrintWriter out=response.getWriter();
+		out.println("<body bgcolor=yellow><h1>Hello Servlet......</h1></body>");
+		out.close();
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+
+
+LoginServlet.java
+
+package com.mphasis;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class LoginServlet
+ */
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    /**
+     * Default constructor. 
+     */
+    public LoginServlet() {
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
+		PrintWriter out=response.getWriter();
+		String username=request.getParameter("uname");
+		String pwd=request.getParameter("pwd");
+		
+
+		if(username.equals("swapna")&&pwd.equals("swapna"))
+			out.println(username+" authienticated successfully");
+			else
+				out.println("Login failed");
+	}
+
+
+
+
+
+	
+	
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+
+
+
+
+Web-app /web-inf / web.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+    version="4.0"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+  <display-name>Archetype Created Web Application</display-name>
+</web-app>
+
+
+index.html
+
+<html>
+<body>
+<h2><%= "Login Form" %></h2>
+<form action="LoginServlet" method="get">
+<label >User Name:</label>
+<input type="text" name="uname">
+<label >Password:</label>
+<input type="password" name="pwd">
+<input type="submit" value="submit">
+</form>
+</body>
+</html>
+
+
+
+December 2:
+
+AppListener.java
+
+package com.mphasis;
+
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
+
+/**
+ * Application Lifecycle Listener implementation class AppListener
+ *
+ */
+@WebListener
+public class AppListener implements ServletContextListener {
+
+    /**
+     * Default constructor. 
+     */
+    public AppListener() {
+        // TODO Auto-generated constructor stub
+    }
+    
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+    	
+    	ServletContextListener.super.contextInitialized(sce);
+    	System.out.println("App initialized");
+    }
+    
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+    	
+    	ServletContextListener.super.contextDestroyed(sce);
+    	System.out.println("App destroyed");
+    	
+    }
+	
+}
+
+
+HelloServlet.java
+
+package com.mphasis;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+@WebServlet("/HelloServlet")
+public class HelloServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private static final Logger logger=LogManager.getLogger(HelloServlet.class);
+    public HelloServlet() {}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.info("HelloServlet execution Started");
+		PrintWriter out=response.getWriter();
+		out.println("<h1>Swapna Motupally</h1>");
+		logger.info("HelloServlet Execution Completed");
+		out.close();
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}
+
+
+
+package com.mphasis;
+
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpFilter;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.io.IOException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
+/**
+ * Servlet Filter implementation class LoggingFileter
+ */
+@WebFilter("/*")
+public class LoggingFileter  implements Filter {
+	private static final Logger logger=LogManager.getLogger(LoggingFileter.class);
+       
+    /**
+     * @see HttpFilter#HttpFilter()
+     */
+    public LoggingFileter() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see Filter#destroy()
+	 */
+	public void destroy() {
+		logger.info("filter destroyed");
+	}
+
+	/**
+	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+	 */
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		HttpServletRequest req=(HttpServletRequest)request;
+		logger.info("Incoming Request : {} {} from IP {}",req.getMethod(),req.getRequestURI(),req.getRemoteAddr());
+		
+		chain.doFilter(request, response);
+		
+		logger.info("Response sent for {} ",req.getRequestURI());
+	}
+
+	/**
+	 * @see Filter#init(FilterConfig)
+	 */
+	public void init(FilterConfig fConfig) throws ServletException {
+		logger.info("filter initialized");
+	}
+
+}
+
+
+package com.mphasis;
+
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.ServletRequestEvent;
+import jakarta.servlet.ServletRequestListener;
+import jakarta.servlet.annotation.WebListener;
+import jakarta.servlet.http.HttpServletRequest;
+
+/**
+ * Application Lifecycle Listener implementation class LoggingListener
+ *
+ */
+@WebListener
+public class LoggingListener implements ServletRequestListener, ServletContextListener {
+
+    /**
+     * Default constructor. 
+     */
+    public LoggingListener() {
+        // TODO Auto-generated constructor stub
+    }
+    
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+    	
+    	ServletContextListener.super.contextInitialized(sce);
+    	
+    	System.out.println("log:App initialized at "+System.currentTimeMillis());
+    }
+    
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+    	
+    	ServletContextListener.super.contextDestroyed(sce);
+    	System.out.println("App stopped at : "+System.currentTimeMillis());
+    }
+    @Override
+    public void requestInitialized(ServletRequestEvent sre) {
+    	
+    	ServletRequestListener.super.requestInitialized(sre);
+    	HttpServletRequest req=(HttpServletRequest) sre.getServletRequest();
+    	System.out.println("log : Request started ");
+    	System.out.println("URI : "+req.getRequestURI());
+    	System.out.println("Method : "+req.getMethod());
+    	System.out.println("Time : "+System.currentTimeMillis());
+    }
+    
+    @Override
+    public void requestDestroyed(ServletRequestEvent sre) {
+    	ServletRequestListener.super.requestDestroyed(sre);
+    	System.out.println("Time : "+System.currentTimeMillis());
+    	
+    }
+	
+}
+
+
+resources
+
+log4j2.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{ISO8601} %-5p [%c{1}] %m%n"></PatternLayout>
+		</Console>
+
+		<File name="file" fileName="app.log" createOnDemand="true" append="true">
+			<PatternLayout pattern="%d{ISO8601} %-5p [%c{1}] %m%n"></PatternLayout>
+		</File>
+	</Appenders>
+	<Loggers>
+		<Root level="debug">
+			<AppenderRef ref="console"></AppenderRef>
+			<AppenderRef ref="file"></AppenderRef>
+		</Root>
+	</Loggers>
+</Configuration>
+
+
+Web-App/ Web-inf / web.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+    version="4.0"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+  <display-name>Archetype Created Web Application</display-name>
+</web-app>
+
+
+index.jsp
+
+<html>
+<body>
+<h2><%= "Hello World!" %></h2>
+<form action="HelloServlet">
+
+<input type="submit" value="click">
+</form>
+</body>
+</html>
+
+
