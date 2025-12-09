@@ -59,3 +59,155 @@ create table admin(
 );
 
 insert into admin(username,password) values ('admin','admin123');
+
+
+
+
+DBConnection.java
+
+package com.proj3.util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBConnection {
+	private static final String URL="jdbc:mysql://localhost:3306/quiz?useSSL=false&serverTimezone=UTC";
+	private static final String USER="root";
+	private static final String PASS="root@39";
+	
+	public static Connection getConnection() throws SQLException {
+		return DriverManager.getConnection(URL,USER,PASS);
+	}
+
+}
+
+
+
+AdminLoginServlet.java
+
+package com.proj3.servlet;
+
+import jakarta.servlet.http.HttpServlet;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import com.proj3.util.DBConnection;
+
+/**
+ * Servlet implementation class AdminLoginServlet
+ */
+@WebServlet("/AdminLoginServlet")
+public class AdminLoginServlet extends HttpServlet implements Servlet {
+	private static final long serialVersionUID = 1L;
+
+    /**
+     * Default constructor. 
+     */
+    public AdminLoginServlet() {
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
+
+	    String username = request.getParameter("username");
+	    String password = request.getParameter("password");
+
+	    if (username == null || password == null || username.trim().isEmpty() || password.trim().isEmpty()) {
+	        request.setAttribute("error", "Username and password are required");
+	        request.getRequestDispatcher("/adminLogin.jsp").forward(request, response);
+	        return;
+	    }
+
+	    String sql = "SELECT admin_id, username FROM admin WHERE username = ? AND password = ?";
+
+	    try (Connection conn = DBConnection.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	        ps.setString(1, username);
+	        ps.setString(2, password);
+
+	        try (ResultSet rs = ps.executeQuery()) {
+
+	            if (rs.next()) {
+	                int adminId = rs.getInt("admin_id");
+
+	                HttpSession session = request.getSession(true);
+	                session.setAttribute("adminId", adminId);
+	                session.setAttribute("adminUsername", rs.getString("username"));
+
+	                response.sendRedirect(request.getContextPath() + "/admin_dashboard.jsp");
+	                return;
+	            } else {
+	                request.setAttribute("error", "Invalid username or password");
+	                request.getRequestDispatcher("/adminLogin.jsp").forward(request, response);
+	                return;
+	            }
+	        }
+
+	    } catch (SQLException e) {
+	        throw new ServletException("Database error while authenticating admin", e);
+	    }
+	}
+
+}
+
+pom.xml dependencies:
+
+ <dependency>
+    <groupId>jakarta.servlet</groupId>
+    <artifactId>jakarta.servlet-api</artifactId>
+    <version>6.1.0</version>
+    <scope>provided</scope>
+	</dependency>
+
+
+
+adminLogin.jsp
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Login</title>
+</head>
+<body>
+
+	<h2> Admin Login</h2>
+	
+	<c:if test="${not empty error }">
+		<div style="color:red"> ${error } </div>
+	</c:if>
+	
+	
+
+</body>
+</html>
+
+
+create views folder, seperate packages
