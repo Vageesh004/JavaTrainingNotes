@@ -1,0 +1,61 @@
+use vageesh;
+
+show databases;
+
+create database vageesh;
+
+use vageesh;
+
+drop database vageesh;
+
+create database quiz;
+
+use quiz;
+
+create table questions(
+	question_id int auto_increment primary key,
+    question_text varchar(500),
+    option_a varchar(255),
+    option_b varchar(255),
+    option_c varchar(255),
+    option_d varchar(255),
+    correct_option char(1) 
+    
+);
+
+select * from questions;
+
+INSERT INTO questions (question_text, option_a, option_b, option_c, option_d, correct_option) VALUES
+('Who won the ICC Cricket World Cup 2011?', 'India', 'Sri Lanka', 'Australia', 'South Africa', 'A'),
+('Who was the Man of the Tournament in the 2019 Cricket World Cup?', 'Ben Stokes', 'Kane Williamson', 'Rohit Sharma', 'David Warner', 'B'),
+('Which bowler took a hat-trick in the 2019 World Cup?', 'Mitchell Starc', 'Mohammad Shami', 'Jasprit Bumrah', 'Trent Boult', 'B'),
+('Who scored the fastest T20I century for India in 2017?', 'KL Rahul', 'Rohit Sharma', 'Suryakumar Yadav', 'Virat Kohli', 'B'),
+('Which team won the ICC Champions Trophy 2013?', 'India', 'England', 'Pakistan', 'Sri Lanka', 'A'),
+('Who was the captain of India during the 2021 World Test Championship Final?', 'Virat Kohli', 'Rohit Sharma', 'MS Dhoni', 'Ajinkya Rahane', 'A'),
+('Who became the first Indian to score 200 in ODI after 2010?', 'Sachin Tendulkar', 'Rohit Sharma', 'Virender Sehwag', 'Shubman Gill', 'A'),
+('Which country won the 2021 T20 World Cup?', 'Australia', 'New Zealand', 'England', 'Pakistan', 'A'),
+('Which Indian bowler took 10 wickets in a Test innings in 2021?', 'Ravichandran Ashwin', 'Harbhajan Singh', 'Jasprit Bumrah', 'Ajaz Patel', 'D'),
+('Who won the Orange Cap in IPL 2020?', 'KL Rahul', 'Shikhar Dhawan', 'David Warner', 'AB de Villiers', 'A'),
+('Which team won the Asia Cup 2018?', 'India', 'Pakistan', 'Sri Lanka', 'Bangladesh', 'A'),
+('Who hit 5 sixes in one over for India in 2022 against Sri Lanka?', 'Shreyas Iyer', 'Hardik Pandya', 'Ravindra Jadeja', 'Deepak Hooda', 'B'),
+('Who won the ICC Under-19 Cricket World Cup 2018?', 'India', 'Australia', 'Pakistan', 'South Africa', 'A');
+
+
+INSERT INTO questions (question_text, option_a, option_b, option_c, option_d, correct_option) VALUES
+('Who won the FIFA World Cup 2014?', 'Germany', 'Argentina', 'Brazil', 'Spain', 'A'),
+('Which player won the Ballon d''Or in 2021?', 'Lionel Messi', 'Cristiano Ronaldo', 'Robert Lewandowski', 'Kylian Mbappé', 'A'),
+('Which club won the UEFA Champions League 2020?', 'Bayern Munich', 'PSG', 'Real Madrid', 'Liverpool', 'A'),
+('Who scored the fastest goal in Euro 2020?', 'Cristiano Ronaldo', 'Patrik Schick', 'Kevin De Bruyne', 'Luke Shaw', 'D'),
+('Who won the UEFA Euro 2016 tournament?', 'France', 'Portugal', 'Germany', 'Italy', 'B'),
+('Which country won the Copa América 2021?', 'Argentina', 'Brazil', 'Chile', 'Colombia', 'A'),
+('Who was the top scorer of FIFA World Cup 2022?', 'Kylian Mbappé', 'Lionel Messi', 'Harry Kane', 'Benzema', 'A');
+
+
+create table admin(
+ adminId int auto_increment primary key,
+ username varchar(100) not null unique,
+ password varchar(100) not null 
+ 
+);
+
+insert into admin(username,password) values ('admin','admin123');
