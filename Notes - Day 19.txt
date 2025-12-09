@@ -1,0 +1,580 @@
+Java Training Notes - Day 19
+
+
+Inheritance:  3 types
+
+
+
+1.Namingg convention
+2.project structure
+
+3.logs
+4.Exception handling
+
+5.validation
+6.Testing
+
+//non-functional requirements required for all projects
+
+
+
+One to Many and Many to Many are lazy loading by default..
+
+one to one is eager.. If we should give lazy to one-to -one, we should give fetch=FetchType.LAZY
+
+
+Generally, we go for Lazy whenever multiple rows we need like that.. But, one to one means one row related to other..
+
+so, by default, we use eager..
+
+
+Also, session needs to be open in lazy loading until all operations are done
+
+
+
+Mam also explained the orphanRemoval concept....if we remove that line, if we remove department, still employees will be there, with null values
+
+
+Mam said, orphanRemoval true or false, in both cases, employees will be removed
+
+Helper method is removeEmployees, if we delete department, all employees will be deleted...in any case
+
+
+
+Question:
+
+For Prgm 5, check with orphan removal, without removal...with and without helper
+
+
+
+
+Program 4:
+
+1. null value is coming.. for passport or person something..
+
+do session.get on passport 
+
+Person -  passport - null coming
+
+In findById of PersonDao, Session.get(Person.class,id) is there...null is coming..
+
+so, get Id from Passport Dao using Session.get()..
+
+or get using any function??
+
+
+use a function 
+
+
+
+
+Program 5: 
+
+Removing Employees in department first and set 
+
+
+-> setting emplist, then returning dlist
+
+
+
+Programs:
+
+
+Program 1: On Inheritance
+
+Laptop.java, Bottle.java etc.
+
+
+
+application.properties
+
+hibernate.connection.driver_class=com.mysql.cj.jdbc.Driver
+hibernate.connection.url=jdbc:mysql://localhost:3306/vageesh
+
+hibernate.connection.username=root
+hibernate.connection.password=root@39
+
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.hbm2ddl.auto=update
+
+hibernate.show_sql=true
+
+
+
+
+Product.java
+
+
+package com.dec9hiber.entities;
+ 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
+ 
+//single table stratergy eg
+@Entity
+@Table(name="prod_table")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+ 
+public class Product {
+ 
+	@Id
+	private int prodId;
+	private String prodName;
+	/**
+	 *
+	 */
+	public Product() {
+		super();
+	}
+	/**
+	 * @param prodId
+	 * @param prodName
+	 */
+	public Product(int prodId, String prodName) {
+		super();
+		this.prodId = prodId;
+		this.prodName = prodName;
+	}
+	public int getProdId() {
+		return prodId;
+	}
+	public void setProdId(int prodId) {
+		this.prodId = prodId;
+	}
+	public String getProdName() {
+		return prodName;
+	}
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
+	}
+	@Override
+	public String toString() {
+		return "Product [prodId=" + prodId + ", prodName=" + prodName + "]";
+	}
+	
+	
+}
+ 
+ 
+
+Laptop.java
+
+package com.dec9hiber.entities;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
+ 
+@Entity
+public class Laptop extends Product {
+	private String brand;
+	private double cost;
+	
+	public Laptop(String brand, double cost) {
+		super();
+		this.brand = brand;
+		this.cost = cost;
+	}
+
+	public Laptop() {
+		super();
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+	
+
+	@Override
+	public String toString() {
+		return "Laptop [brand=" + brand + ", cost=" + cost + "]";
+	}
+	
+	
+	
+
+}
+
+
+Bottle.java
+
+package com.dec9hiber.entities;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
+ 
+
+@Entity
+public class Bottle extends Product {
+	
+	private String brand;
+	private double bottleCost;
+	private double capacity;
+	
+	
+	public Bottle(String brand, double bottleCost, double capacity) {
+		super();
+		this.brand = brand;
+		this.bottleCost = bottleCost;
+		this.capacity = capacity;
+	}
+
+
+	public Bottle() {
+		super();
+	}
+
+	
+	
+
+	public String getBrand() {
+		return brand;
+	}
+
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+
+	public double getBottleCost() {
+		return bottleCost;
+	}
+
+
+	public void setBottleCost(double bottleCost) {
+		this.bottleCost = bottleCost;
+	}
+
+
+	public double getCapacity() {
+		return capacity;
+	}
+
+
+	public void setCapacity(double capacity) {
+		this.capacity = capacity;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Bottle [brand=" + brand + ", bottleCost=" + bottleCost + ", capacity=" + capacity + "]";
+	}
+	
+	
+	
+	
+
+}
+
+
+App.java
+
+package com.dec9hiber;
+
+import org.slf4j.Logger;
+
+import org.slf4j.LoggerFactory;
+import org.hibernate.Session;
+
+import com.dec9hiber.entities.Product;
+import com.dec9hiber.util.HibernateUtil;
+import com.mysql.cj.log.LogFactory;
+
+import org.hibernate.Transaction;
+
+/**
+ * Hello world!
+ */
+public class App {
+	
+	private static final Logger logger=LoggerFactory.getLogger(App.class);
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+        
+        Session session=HibernateUtil.buildSessionFactory().openSession();
+        Transaction tx=session.beginTransaction();
+        
+        logger.info("session created");
+        
+        Product p=new Product(125,"Laptop");
+        
+        session.save(p);
+        logger.info("persistent object inserted");
+        tx.commit();
+        
+        session.close();
+        logger.info("session closed");
+        
+    }
+}
+
+
+
+pom.xml
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.dec9hiber</groupId>
+  <artifactId>Dec9-Hiber</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <name>Dec9-Hiber</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>17</maven.compiler.release>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>5.11.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Optionally: parameterized tests support -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+	    <groupId>org.hibernate.orm</groupId>
+	    <artifactId>hibernate-core</artifactId>
+	    <version>6.6.25.Final</version>
+	</dependency>
+	 
+	    <!-- MySQL Connector -->
+	    <dependency>
+	      <groupId>mysql</groupId>
+	      <artifactId>mysql-connector-java</artifactId>
+	      <version>8.0.33</version>
+	    </dependency>
+	    
+	    
+	      <dependency>
+	      <groupId>org.slf4j</groupId>
+	      <artifactId>slf4j-api</artifactId>
+	      <version>2.0.17</version>
+	    </dependency>
+	    
+	    <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+		<dependency>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-classic</artifactId>
+		    <version>1.5.21</version>
+		    <scope>compile</scope>
+		</dependency>
+		
+		
+			    
+  </dependencies>
+
+  <build>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.3.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.13.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.4.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.12.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.6.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
+
+
+
+Logback.xml:
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	<encoder>
+		<pattern>%d{HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
+	</encoder>
+	
+	</appender>
+	
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file> log/app.logs</file>
+		<append>true</append>
+		
+		<encoder>
+			<pattern>%d {HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<root level="debug">
+		<appender-ref ref="STDOUT"></appender-ref>
+		<appender-ref ref="FILE"></appender-ref>
+	</root>
+</configuration>
+
+
+
+
+Program 2: Using Inheritence of type Joined
+
+
+In same project and packages, added Vehicle.java and derived classes
+
+Car.java and Bike.java
+
+
+
+
+Program 3: one_table_perclass
+
+Food, IndianFood,Continental Food
+
+
+Program 4 and 5: mam uploaded
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Morning:
+
+3 programs
+
+
+Morning after break:
+
+That One Join program using Daos
+
+
+Afternoon:
+
+Again another prgm using that concept
+
+
+
