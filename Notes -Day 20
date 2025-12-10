@@ -1,0 +1,158 @@
+Java Training - Notes Day 20
+
+
+Session.get(Student.class,1)
+
+This line will go to database and store the result in L1 cache..
+
+so, that ,for next times and all, it will access from cache memeory faster rather than going to DB
+
+
+
+
+Spring Boot and Spring Framework:
+
+
+Inversion of Control:
+
+Container will itself create the objects , not users
+
+
+
+Dependency Injection:
+
+Setter based Injection
+
+Constructor based Injection
+
+Method Injection
+
+using Autowired for DI
+
+
+
+Bean Factory:
+
+Parent class
+
+
+Configurations - XML / Java
+
+
+
+IOC - using Collections
+
+Bean Autowiring
+
+
+Bean Containers:
+
+Loose coupling:  Even if we add/remove beans, everything will be same
+
+
+
+
+Bean is giving the instance of the class
+
+
+If u change anything in pom.xml, give update project
+
+
+
+
+Prgm 1 explanation:
+
+1. property -> give setter
+
+constructor-arg -> Constructor
+
+
+property... setter injection... constructor..constructor injection
+
+
+2. In xml bean file, name can be anything, value must be String only
+
+
+3. Do with both setters and constructors
+
+4. Same hashcode will be there for several instances..
+they refer to the same instance
+
+Singleton pattern
+
+But if we want different, we want Prototype 
+
+
+5. Everything we did was for Core...now we are adding for Context..
+
+Context means for whole application, we are getting from outside
+
+
+6. Add data in data.properties and put ${Person.id} like that in Person-bean.xml instead of giving directly in value
+
+We should give context property placeholder tag in person-bean.xml ,
+
+We should  add data.properties in resources folder
+
+
+7. In data.properties, no need to give Person.langs[0] , Person.langs[1] like that...when only one array is there, don't need to give like that
+
+It is used when multiple arrays are there like that..
+
+
+8. Summary:
+
+normal one bean
+
+bean within bean
+
+Collections: using list
+
+using Arrays
+
+
+
+9. Autowiring:
+
+ i) By name:
+
+   class property name must be same to id or name attribute 
+
+
+2) By Type: class type, name or id may not be same and class prop
+
+3) Constructor - Injection is constructor injection
+
+
+
+
+Now, xml writing is very tedious.. 
+
+
+
+Program 2:
+
+Using Beans by declaring them in SpringConfiguration file
+
+
+7 Annotations done:
+
+1.@Bean
+2. @Configuration
+
+3. @Component Scan
+4. @Autowired
+
+5. @Value
+
+
+
+Program 3:
+
+@PostConstruct  - DB Connections, Validation..
+
+It will invoke immediately after bean instantiation, dependency injection
+
+
+@Pre destroy - for logs close, like these things
+
