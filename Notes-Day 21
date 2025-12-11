@@ -1,0 +1,65 @@
+Java Training Notes - Day 21
+
+
+Spring JDBC:
+
+
+Spring Transaction:
+
+Transaction means it will not violate ACID Properties
+
+we use Enable Transaction Management in Configuration 
+
+We do transaction management in service layer.we use @Transaction...
+
+we are adding a new layer service layer...we do business logic and database specific calls
+
+
+
+Spring MVC:
+
+Till now we have seen dao,database
+
+now we will see client
+
+
+
+client, Dispatcher Servlet, View Resolver, View mapper...
+
+View mapper sees the apis and all and maps..
+
+
+
+Dispatcher Servlet is like the central one which gets the request from the client and processes and also gives the output to the views
+
+
+
+Prgm 1:
+
+1.Within double quotes, we use single quotes
+
+
+Prgm 2: Spring JDBC
+
+
+Do update and delete method yourself
+
+
+
+Prgm 3:
+
+Transaction
+
+
+Dependencies: Spring core,jdbc,orm,context,tx
+
+Hibernate
+mysql-connector
+
+
+1. we can put dynamic db name when we take from outside machine in appln.properties
+
+
+2.in pom.xml, mam changed to 5.3.36
+
+In Appconfig,add bean Sessionfactory
