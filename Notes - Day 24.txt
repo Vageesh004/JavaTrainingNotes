@@ -1,0 +1,1165 @@
+Java Training Notes - Day 24 - 15/12
+ 
+
+Logging Aspect:
+
+
+AOP(Aspect Oriented Programming):
+
+The things like Logging,Transaction etc. we do..without them also the prgm runs..but we add them for making our prgm more easy
+
+
+Aspect:
+
+1.The logging , Transaction and all called as aspect
+
+2. The pointcut is the thing with methods 
+
+
+
+
+Actuator:
+
+It is the health status one. The relevant endpoints
+
+Prgm 1:
+
+Remove .getName(), we will get logs for all services, daos etc.
+
+
+
+Prgm 2: Item and Order joining columns
+
+Writing 
+
+
+@JsonManagedReference in Order class
+
+
+
+Priority: yml, yaml, properties..
+
+in increasing order
+
+There is docker.yaml file...no properties file...
+
+
+
+
+
+
+Question:
+
+1. If ItemId is given, find all Orders in it
+
+2. findByOrdDate() -> there already
+
+
+
+
+Prgm 1:
+
+
+package com.springboot.aop;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import org.slf4j.Logger;
+
+@Aspect
+@Component
+public class LoggingAspect {
+	
+	private static final Logger logger=LoggerFactory.getLogger(LoggingAspect.class);
+	
+	@Before(" execution(* com.springboot.controllers.*.*(..))")
+	public void beforeEachMethod(JoinPoint jp) {
+		logger.info("Start{}",jp.getSignature().getName());
+	}
+
+	@AfterReturning(pointcut =" execution(* com.springboot.controllers.*.*(..))", returning = "result")
+	public void afterReturning(JoinPoint jp,Object result) {
+		logger.info("Success->{}",jp.getSignature());
+		logger.info("Result->{}",result);
+	}
+	
+	@AfterThrowing(pointcut =" execution(* com.springboot.controllers.*.*(..))", throwing = "ex")
+	public void afterException(JoinPoint jp,Exception ex) {
+		logger.error("ERROR->{}",jp.getSignature()+ "Exception->{}",ex.getMessage());
+	}
+	
+	@After(" execution(* com.springboot.controllers.*.*(..))")
+	public void logAfter(JoinPoint jp) {
+		logger.info("End->{}",jp.getSignature());
+	}
+	
+	
+	
+}
+
+Saturday's package:
+
+com.springboot
+
+Ecomerce-App
+
+
+ECommerceApplication.java
+
+
+package com.springboot;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class EcommerceAppApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(EcommerceAppApplication.class, args);
+		System.out.println("Hello,This is SpringBoot project");
+	}
+
+}
+
+
+com.springboot.controllers
+
+
+
+package com.springboot.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.springboot.entities.Item;
+import com.springboot.services.ItemService;
+
+import jakarta.validation.Valid;
+ 
+@RestController
+@RequestMapping("/item")
+public class ItemController {
+	
+@Autowired
+ItemService service;
+
+
+@GetMapping("/")
+	public ResponseEntity<List<Item>> findAll(){
+		return new ResponseEntity<>(service.findAll(),HttpStatus.FOUND);
+	}
+
+@GetMapping("/{id}")
+	public ResponseEntity<Item> findById(@PathVariable Long id)
+	{
+		return new ResponseEntity<>( service.findById(id),HttpStatus.FOUND);
+	}
+
+ 
+@PostMapping("/")
+public ResponseEntity<Item> save(@Valid @RequestBody Item item)
+{
+	return new ResponseEntity<>(service.save(item),HttpStatus.ACCEPTED);
+}
+ 
+
+@PutMapping("/{id}")
+public ResponseEntity<Item> update(@RequestBody Item item,@PathVariable Long id)
+{
+	if(id<=0)
+	{
+		throw new IllegalArgumentException("id not found");
+	}
+	return new ResponseEntity<>(service.update(item, id),HttpStatus.FOUND);
+}
+ 
+@DeleteMapping("/{id}")
+public ResponseEntity<String> delete(@PathVariable Long id) {
+	if(id<=0)
+	{
+		throw new IllegalArgumentException("id not found");
+	}
+	 service.delete(id);
+	 return new ResponseEntity<>("Success",HttpStatus.OK);
+}
+}
+
+
+
+
+com.springboot.daos:
+
+ItemDao.java
+
+
+package com.springboot.daos;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.springboot.entities.Item;
+import com.springboot.repositories.ItemRepository;
+
+@Repository
+public class ItemDao implements ItemDaoInterface {
+	
+	@Autowired
+	ItemRepository repository;
+	
+	public List<Item> findAll(){
+		
+		return repository.findAll();
+	}
+	
+	public Optional<Item> findById(Long id) {
+		return repository.findById(id);
+	}
+	
+	public Item save(Item item) {
+		return repository.save(item);
+	}
+	
+	public Item update(Item item) {
+		return repository.save(item);
+	}
+	
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
+	
+	
+
+}
+
+
+ItemDaoInterface.java
+
+
+package com.springboot.daos;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.springboot.entities.Item;
+
+public interface ItemDaoInterface {
+	
+	public List<Item> findAll();
+	public Optional<Item> findById(Long id);
+	public Item save(Item item);
+	
+	public Item update(Item item);
+	
+	public void delete(Long id);
+
+}
+
+
+
+com.springboot.entities
+
+
+package com.springboot.entities;
+ 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+ 
+
+@Entity
+@Table(name="Item_table")
+public class Item {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long itemId;
+	
+	@NotBlank(message="Item name is mandatory")
+    @Size(min=2,max=50,message="Item must be 2-50 charactres")
+	private String itemName;
+	
+	@NotNull(message="Item cost is mandatory")
+    @Min(value=1,message="Item cost must be greater than 0")
+	private double itemCost;
+	
+	public Item(String itemName, double itemCost) {
+		super();
+		this.itemName = itemName;
+		this.itemCost = itemCost;
+	}
+	
+	
+	
+
+	public Item() {
+		super();
+	}
+
+
+
+
+	public Long getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(Long itemId) {
+		this.itemId = itemId;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public double getItemCost() {
+		return itemCost;
+	}
+
+	public void setItemCost(double itemCost) {
+		this.itemCost = itemCost;
+	}
+
+	@Override
+	public String toString() {
+		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", itemCost=" + itemCost + "]";
+	}
+	
+	
+	
+	
+}
+
+
+com.springboot.exceptions
+
+
+GlobalExceptionClass.java
+
+package com.springboot.exceptions;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class GlobalExceptionClass {
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleItemNotFoundException(
+            ItemNotFoundException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("errorMessage", ex.getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+    
+
+    /*@ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(
+            IllegalArgumentException ex) {
+    	
+    	return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(
+           Exception ex) {
+    	
+    	return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+    }*/
+    
+    
+}
+
+
+ItemNotFoundException
+
+package com.springboot.exceptions;
+
+public class ItemNotFoundException extends RuntimeException {
+
+    public ItemNotFoundException(String message) {
+        super(message);
+    }
+}
+
+
+
+
+com.springboot.repositories
+
+package com.springboot.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.springboot.entities.Item;
+
+public interface ItemRepository extends JpaRepository<Item, Long> {
+	
+	
+}
+
+
+com.springboot.services
+
+
+package com.springboot.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.springboot.daos.ItemDao;
+import com.springboot.entities.Item;
+import com.springboot.exceptions.ItemNotFoundException;
+
+import jakarta.transaction.Transactional;
+
+@Service
+public class ItemService implements ItemServiceInterface {
+	
+	@Autowired
+	ItemDao dao;
+	
+	@Override
+	public List<Item> findAll() {
+		return dao.findAll();
+		
+	}
+	
+	@Override
+	public Item findById(Long id) {
+        return dao.findById(id)
+                .orElseThrow(() -> 
+                    new ItemNotFoundException("Item not found with id: " + id));
+    }
+	
+	@Override
+	public Item save(Item item) {
+		return dao.save(item);
+	}
+	
+	
+	@Override
+	@Transactional
+	public Item update(Item item,Long id) {
+		
+		Item exItem=dao.findById(id)
+				.orElseThrow(()->new ItemNotFoundException("Item not found with id: " + id));
+		
+		exItem.setItemName(item.getItemName());
+		exItem.setItemCost(item.getItemCost());
+		return dao.update(exItem);
+		
+		
+	
+	}
+	
+	
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		Optional<Item> exItem=dao.findById(id);
+		if(exItem!=null) {
+			dao.delete(id);
+			System.out.println("item deleted");
+		}
+		
+		else {
+			System.out.println("no item with this id exists");
+		}
+	}
+	
+}
+
+
+ItemServiceInterface.java
+
+
+package com.springboot.services;
+
+import java.util.List;
+
+import com.springboot.entities.Item;
+
+public interface ItemServiceInterface {
+	
+	public List<Item> findAll();
+	public Item findById(Long id);
+	public Item save(Item item);
+	
+	public Item update(Item item,Long id);
+	
+	public void delete(Long id);
+
+}
+
+
+application.properties
+
+spring.application.name=EcommerceApp
+server.port=9001
+ 
+# Application name
+ 
+# Database configuration (MySQL)
+spring.datasource.url=jdbc:mysql://localhost:3306/vageesh
+spring.datasource.username=root
+spring.datasource.password=root@39
+ 
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+ 
+# MySQL dialect
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+ 
+# Logging level (optional)
+# logging.level.org.hibernate.SQL=DEBUG
+
+
+logging.level.root=INFO
+logging.level.com.springbootlogger=debug
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %msg%n
+logging.file.name=logs/ecomm.log
+
+logging.pattern.file=%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %msg%n
+
+
+
+ 
+
+pom.xml:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.0.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.springboot</groupId>
+	<artifactId>Ecommerce-App</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>Ecommerce-App</name>
+	<description>Demo project for Spring Boot</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+	<dependencies>
+	
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-webmvc</artifactId>
+			</dependency>
+	 
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-tomcat</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-devtools</artifactId>
+	    <scope>runtime</scope>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+	<dependency>
+	    <groupId>org.projectlombok</groupId>
+	    <artifactId>lombok</artifactId>
+	    <version>1.18.42</version>
+	</dependency>
+	 
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<scope>test</scope>
+			</dependency>
+	 
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-devtools</artifactId>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+	<dependency>
+	      <groupId>com.mysql</groupId>
+	      <artifactId>mysql-connector-j</artifactId>
+	      <scope>runtime</scope>
+	    </dependency>
+	 
+	<dependency>
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-actuator-test</artifactId>
+	      <scope>test</scope>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+	      <scope>test</scope>
+	    </dependency>
+	    
+	    <dependency>
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-data-jpa</artifactId>
+	      </dependency>
+	    
+		    <dependency>
+	<groupId>jakarta.persistence</groupId>
+	<artifactId>jakarta.persistence-api</artifactId>
+	<version>3.2.0</version>
+	</dependency>
+	
+	
+		<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-validation</artifactId>
+	</dependency>
+
+	 
+	</dependencies>
+ 
+ 
+ 
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+
+
+
+
+
+Saturday Proj 2:
+
+
+Employee.java
+
+
+package com.springbootlogger.entities;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="emp_aop")
+@NamedQueries(NamedQuery="select e from Employee e where e.ename=:name")
+
+public class Employee {
+ 
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long eid;
+	private String ename;
+	private double salary;
+	public Employee(String ename, double salary) {
+		super();
+		this.ename = ename;
+		this.salary = salary;
+	}
+	public Long getEid() {
+		return eid;
+	}
+	public void setEid(Long eid) {
+		this.eid = eid;
+	}
+	public String getEname() {
+		return ename;
+	}
+	public void setEname(String ename) {
+		this.ename = ename;
+	}
+	public double getSalary() {
+		return salary;
+	}
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+	
+	
+}
+
+
+EmployeeController.java
+
+
+package com.springbootlogger.controller;
+
+import java.util.List;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.springbootlogger.entities.Employee;
+import com.springbootlogger.service.EmployeeService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+@RestController
+@RequestMapping("/emp")
+public class EmployeeController {
+	
+	private static final Logger logger=LoggerFactory.getLogger(EmployeeController.class);
+	
+	@Autowired
+	EmployeeService service;
+	
+	@GetMapping("/")
+	public List<Employee> findAll(){
+		logger.info("findall started");
+		return service.findAll();
+	}
+	
+	@GetMapping("/{id}")
+	public Employee findById(Long id) {
+		return service.findById(id);
+	}
+	
+	
+	@PostMapping("/")
+	public Employee save(Employee employee) {
+		return service.save(employee);
+	}
+	
+	@GetMapping("/ename/{name}")
+	public Employee findByEname(@PathVariable String name) {
+		return service.findByEname(name);
+		
+	}
+
+	@GetMapping("/salary/{name}")
+	public List<Employee> findBySalary(@PathVariable double salary){
+		return service.findBySalary(salary);
+		
+	}
+}
+
+
+com.springbootlogger.aop
+
+
+package com.springbootlogger.aop;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+
+import org.springframework.stereotype.Component;
+
+import com.springbootlogger.controller.EmployeeController;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Aspect
+@Component
+public class LoggingAspect {
+
+	private static final Logger logger=LoggerFactory.getLogger(EmployeeController.class);
+	
+	@Before("execution(* com.springbootlogger.service.*.*(..))")
+	public void beforeEachMethod(JoinPoint joinPoint) {
+		logger.info(joinPoint.getSignature().getName());
+		
+	}
+
+	@After("execution(* com.springbootlogger.service.*.*(..))")
+	public void afterEachMethod(JoinPoint joinPoint) {
+		logger.info("Exiting method: {}",joinPoint.getSignature());
+		
+	}
+	
+	@AfterReturning("execution(* com.springbootlogger.service.*.*(..))")
+	public void afterReturningEachMethod(JoinPoint joinPoint) {
+		logger.info("Exiting method: {}",joinPoint.getSignature());
+	}
+	
+	
+	@AfterThrowing(pointcut="execution(* com.springbootlogger.service.*.*(..))",
+			throwing="ex")
+	public void afterExceptionThrown(JoinPoint joinPoint,Exception ex) {
+		logger.error("Service Exception: {}, message={}",joinPoint.getSignature());
+	}
+	
+}
+
+
+
+SpringBootApplication.java
+
+package com.springbootlogger;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringbootloggerApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringbootloggerApplication.class, args);
+	}
+
+}
+
+
+
+EmployeeService.java
+
+package com.springbootlogger.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.springbootlogger.entities.Employee;
+import com.springbootlogger.repository.EmployeeRepository;
+
+@Service
+public class EmployeeService {
+	
+	@Autowired
+	EmployeeRepository repository;
+	
+	public List<Employee> findAll(){
+		return repository.findAll();
+	}
+	
+	public Employee findById(Long id) {
+		return repository.findById(id).get();
+	}
+	
+	public Employee save(Employee employee) {
+		return repository.save(employee);
+	}
+
+	public Employee findByEname(String name) {
+		// TODO Auto-generated method stub
+		return repository.findByEname(name);
+	}
+
+	public List<Employee> findBySalary(double salary) {
+		// TODO Auto-generated method stub
+		return repository.findBySalary(salary);
+	}
+
+}
+
+
+EmployeeRepository.java
+
+package com.springbootlogger.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.springbootlogger.entities.Employee;
+
+public interface EmployeeRepository extends JpaRepository<Employee,Long> {
+
+	Employee findByEname(String name);
+
+	List<Employee> findBySalary(double salary);
+
+	@Query(value="select * from emp_aop where salary=?1 and ename like ?2",nativeQuery=true)
+	List<Employee> findEmployeesBySalaryAndNameStartsWithS(@Param("salary")double salary,
+			String name);
+	
+	
+	@Query("select e from emp_aop e where e.salary=:salary and e.ename like :name")
+	List<Employee> findEmployeesBySalaryAndNameStartsWithSUsingJPQL(@Param("salary")double salary,
+			@Param("name")String name);
+}
+
+
+application.properties
+
+spring.application.name=springbootlogger
+server.port=9001
+ 
+# Application name
+ 
+# Database configuration (MySQL)
+spring.datasource.url=jdbc:mysql://localhost:3306/vageesh
+spring.datasource.username=root
+spring.datasource.password=root@39
+ 
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+ 
+# MySQL dialect
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+ 
+# Logging level (optional)
+//logging.level.org.hibernate.SQL=DEBUG
+
+logging.level.root=INFO
+logging.level.com.springbootlogger=debug
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %msg%n
+logging.file.name=logs/empapp.log
+
+logging.pattern.file=%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %msg%n
+
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.0.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.springbootlogger</groupId>
+	<artifactId>springbootlogger</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>springbootlogger</name>
+	<description>Demo project for Spring Boot</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+			<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-devtools</artifactId>
+		    <scope>runtime</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.42</version>
+		</dependency>
+		
+		
+		
+			
+			<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+	<dependency>
+	      <groupId>com.mysql</groupId>
+	      <artifactId>mysql-connector-j</artifactId>
+	      <scope>runtime</scope>
+	    </dependency>
+	 
+	<dependency>
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-actuator-test</artifactId>
+	      <scope>test</scope>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+	      <scope>test</scope>
+	    </dependency>
+	    
+	    <dependency>
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-data-jpa</artifactId>
+	      </dependency>
+	    
+		    <dependency>
+	<groupId>jakarta.persistence</groupId>
+	<artifactId>jakarta.persistence-api</artifactId>
+	<version>3.2.0</version>
+	</dependency>
+	
+	
+	
+		<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-validation</artifactId>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-validation</artifactId>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-aop</artifactId>
+	    <version>3.5.4</version>
+	</dependency>
+	
+	<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+
+
+spring:
+  application:
+    name: springbootlogger
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  h2:
+    console:
+      enabled: true
+			
+	web:
+	 resources:
+	   add-mappings: true
+server:
+  port: 9001
+
+logging:
+  level:
+    root: INFO
+    com.springbootlogger: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %msg%n"
+  file:
+    name: logs/empapp.log
+
+
