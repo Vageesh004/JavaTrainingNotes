@@ -1,0 +1,422 @@
+Java Training Notes - Day 25
+
+
+Profiles:
+
+clean install - pdev, ptest
+
+
+
+
+FrontEnd:
+
+
+Question:
+
+ch-1
+ch-2
+ch-3
+ch-4
+ch-5
+
+
+
+ch-1
+
+ch-2
+
+ch-3
+
+ch-4
+
+ch-5
+
+
+
+Program 1:
+
+Used prod, dev, test environment files in one prgm
+
+and other prgm is Swagger prgm
+
+
+
+
+
+
+
+Thymeleaf:
+
+
+
+
+User.java
+
+package com.user.entities;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class User {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long Id;
+	
+	private String userName;
+	private String userAddress;
+	
+	public User(Long id, String userName, String userAddress) {
+		super();
+		Id = id;
+		this.userName = userName;
+		this.userAddress = userAddress;
+	}
+
+	public User() {
+		super();
+	}
+	
+	
+
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserAddress() {
+		return userAddress;
+	}
+
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
+	
+
+	@Override
+	public String toString() {
+		return "User [Id=" + Id + ", userName=" + userName + ", userAddress=" + userAddress + "]";
+	}
+
+	
+	
+}
+
+
+User project
+
+
+com.user.onfig:
+
+package com.user.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+
+@Configuration
+public class SwaggerConfig {
+	
+	@Bean
+	public OpenAPI OpenApi() {
+		return new OpenAPI()
+				.info(new Info().title("User Management Application")
+						.description("Swagger configuration demo using springboot UserApplication")
+						.version("1.0")
+						.contact(new Contact()
+								.name("API Support Team")
+								.email("vageesh.smd@gmail.com")
+								.url("com.user.userapp"))
+						.license(new License()
+								.name("Apache 2.0")
+								.url("http://www.apache.org./licenses/LICENCES-2.0")));
+	}
+	
+
+}
+
+
+
+com.user.controller
+
+
+package com.user.controller;
+
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.user.entities.User;
+import com.user.service.UserService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@RestController
+@RequestMapping("/users")
+@Tag(name="User Apis",description="CRUD operations on User")
+public class UserController {
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    // CREATE
+    @PostMapping
+    @Operation(summary="user created")
+    @ApiResponse(responseCode="200",description="user added")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User savedUser = userService.saveUser(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+    // READ ALL
+    @GetMapping
+    @Operation(summary="find all Users")
+    @ApiResponse(responseCode="200",description="Retrieves all Users info")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    // READ BY ID
+    @GetMapping("/{id}")
+    @Operation(summary="find user by Id")
+    @ApiResponses({ 
+    	@ApiResponse(responseCode="200",description="user exists with given userid"),
+    	@ApiResponse(responseCode="404",description="user not found")})
+    	
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    // DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok("User deleted successfully");
+    }
+}
+
+
+User.java
+
+package com.user.entities;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="user_swagger")
+public class User {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	
+	private String userName;
+	private String userAddress;
+	
+	public User(String userName, String userAddress) {
+		super();
+		
+		this.userName = userName;
+		this.userAddress = userAddress;
+	}
+
+	public User() {
+		super();
+	}
+	
+	
+
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserAddress() {
+		return userAddress;
+	}
+
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
+
+	@Override
+	public String toString() {
+		return "User [userName=" + userName + ", userAddress=" + userAddress + "]";
+	}
+	
+
+	
+
+	
+	
+}
+
+
+UserRepository
+
+
+package com.user.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.user.entities.User;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+}
+
+
+
+
+package com.user.service;
+
+
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.user.entities.User;
+import com.user.repository.UserRepository;
+
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    // CREATE
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
+
+    // READ ALL
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    // READ BY ID
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id " + id));
+    }
+
+    // DELETE
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+}
+
+
+
+application.properties
+
+
+spring.application.name=user
+server.port=9001
+
+# MySQL Database Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/vageesh
+spring.datasource.username=root
+spring.datasource.password=root@39
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+ 
+# JPA / Hibernate
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+spring.jpa.hibernate.ddl-auto=update   
+spring.jpa.show-sql=true
+ 
+# Actuator
+management.endpoints.web.exposure.include=env
+ 
+ 
+
+
+ 
+
+application-dev . properties
+
+
+#server.port=9001
+
+#spring.datasource.url=jdbc:h2:mem:devdb
+#spring.datasource.username=sa
+#spring.datasource.password=
+
+#spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+#spring.h2.console.enabled=true
+#spring.h2.console.path=/h2-console
+
+
+
+application-prod.prooperties
+
+
+#server.port=8080
+
+#spring.datasource.url=jdbc:mysql://localhost:3306/vageesh
+#spring.datasource.username=root
+#spring.datasource.password=root@39
+
+#spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+
+
+
+application-test.properties
+
+
+#spring.application.name=user-test
+#server.port=0
+
+#spring.datasource.url=jdbc:h2:mem:testdb
+#spring.datasource.username=sa
+#spring.datasource.password=
+
+#spring.jpa.hibernate.ddl-auto=create-drop
+#spring.jpa.show-sql=false
+
+
+
+
+
