@@ -291,3 +291,137 @@ admin_dashboard.jsp
 
 </body>
 </html>
+
+
+CreateQuizServlet.java
+
+
+package com.proj3.servlet;
+
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+import java.io.IOException;
+import java.sql.*;
+
+import com.proj3.util.DBConnection;
+
+@WebServlet("/CreateQuizServlet")
+public class CreateQuizServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String quizName = request.getParameter("quizName");
+        String[] questionIds = request.getParameterValues("questionIds");
+
+        HttpSession session = request.getSession(false);
+        int adminId = (int) session.getAttribute("adminId");
+
+        if (quizName == null || questionIds == null) {
+            response.sendRedirect("createQuiz.jsp");
+            return;
+        }
+
+        try (Connection conn = DBConnection.getConnection()) {
+
+            // 1️⃣ Insert Quiz
+            String quizSql = "INSERT INTO quizzes (quiz_name, created_by) VALUES (?, ?)";
+            PreparedStatement psQuiz =
+                    conn.prepareStatement(quizSql, Statement.RETURN_GENERATED_KEYS);
+
+            psQuiz.setString(1, quizName);
+            psQuiz.setInt(2, adminId);
+            psQuiz.executeUpdate();
+
+            ResultSet rs = psQuiz.getGeneratedKeys();
+            rs.next();
+            int quizId = rs.getInt(1);
+
+            // 2️⃣ Insert Quiz Questions
+            String qqSql = "INSERT INTO quiz_questions (quiz_id, question_id) VALUES (?, ?)";
+            PreparedStatement psQQ = conn.prepareStatement(qqSql);
+
+            for (String qid : questionIds) {
+                psQQ.setInt(1, quizId);
+                psQQ.setInt(2, Integer.parseInt(qid));
+                psQQ.addBatch();
+            }
+            psQQ.executeBatch();
+
+            response.sendRedirect("admin_dashboard.jsp");
+
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
+    }
+}
+
+adminDashboard.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%@ page session="true" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="com.proj3.util.DBConnection" %>
+
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+<%
+    Integer adminId = (Integer) session.getAttribute("adminId");
+    String adminUsername = (String) session.getAttribute("adminUsername");
+
+    if (adminId == null) {
+        response.sendRedirect("adminLogin.jsp");
+        return;
+    }
+%>
+
+<h2>Welcome Admin: <%= adminUsername %></h2>
+<p>Admin ID: <%= adminId %></p>
+
+<hr>
+
+<h3>Create New Quiz</h3>
+
+<form action="<%= request.getContextPath() %>/CreateQuizServlet" method="post">
+
+    <label>Quiz Name:</label><br>
+    <input type="text" name="quizName" required /><br><br>
+
+    <h4>Select Questions:</h4>
+
+    <%
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps =
+                 conn.prepareStatement("SELECT question_id, question_text FROM questions");
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+    %>
+                <input type="checkbox" name="questionIds"
+                       value="<%= rs.getInt("question_id") %>">
+                <%= rs.getString("question_text") %>
+                <br><br>
+    <%
+            }
+        } catch (Exception e) {
+            out.println("<p style='color:red'>Error loading questions</p>");
+        }
+    %>
+
+    <br>
+    <input type="submit" value="Create Quiz">
+</form>
+
+<hr>
+
+<a href="logout.jsp">Logout</a>
+
+</body>
+</html>
+
