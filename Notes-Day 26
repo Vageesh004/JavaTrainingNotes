@@ -1,0 +1,126 @@
+Java Training Notes - Day 26
+
+
+Online PG Accomodation Registration form
+
+
+Question: create a form that accepts user's details. using the form, pg accommodation registration:
+
+1. Personal details:
+
+- Full name (mandatory) alphabets only , mobile no mandatory 10 digits, email mandatory 
+
+- PG details - mut selet one city, room type :1,2,3, sharing
+
+facilities -wifi,ac etc
+monthly rent - range 20000 to 40000
+
+PG Address: Complete address
+
+
+
+
+
+Documents: upload  Id Proof(pdf,doc)
+
+payment process: gpay,phone pay
+
+Buttons: submit(ALT +S) , reset (Alt+r) 
+
+provide tab holders
+
+provide minimum validation 
+
+Prgm 1: Forms
+
+
+
+1. label,input, id,name
+
+2. radio button, check box
+
+3. select id, option
+
+4. select , optgroup
+
+5. FieldSet - categorizing all kind of indices into one
+
+6. tabIndex.. - maintains the order in which we should fill the details
+
+In input tag only, we will give
+
+
+7. accessKey - for submit                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+
+
+
+
+CSS:
+
+
+Inline CSS:
+
+1.color
+
+2.font-size
+
+3.text-align
+
+4.text-decoration -underline
+
+6.writing-mode: vertical-lr
+
+7.border - 3px solid brown
+
+8.padding
+
+9.font-size
+
+10.font-family
+
+11. font-weight
+
+
+12. sibling, child properties
+
+
+
+
+<div>
+
+<p>  
+
+
+<div> <p> </p> <div>
+
+
+the p under div is a child, it gets the properties.... the p inside one is
+
+
+
+
+- div,p  div+p , div>p , div p
+
+
+13. Id Selector , Universal Selector, Class selector
+
+14. link: link , visited, hover, active - give different colours for it
+
+
+15. Image inside Anchor Tag , img inside button
+
+16. colours given using hashcode
+
+#, then give digits...2 digits represent a number. 
+
+give 3 digits if both the digits represent the same color 
+
+
+
+17.css forms
+
+18. External css.. all basic like margin, padding etc.
+
+
+
