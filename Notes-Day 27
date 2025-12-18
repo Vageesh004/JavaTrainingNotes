@@ -1,0 +1,364 @@
+ Notes - Day 27
+
+
+
+Quesn:
+
+Based on html 5
+
+ Have a header section, provide nav bar
+
+Footer and main component
+
+
+use <header>
+<footer>
+<nav>
+<audio>
+
+<main>
+
+
+Quesn:
+
+in one row, write bootstrap header..use it for all rows
+
+
+
+Today's prgms:
+
+
+1.demoOnBS-Container.html
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container-lg bg-primary">
+        <h1>Containers demo</h1>
+    </div>
+
+    <div class="container-fluid sm-success"><h1> Containers Demo</h1></div>
+
+    <div class="container-fluid bg-danger"><h1> Containers Demo</h1></div>
+
+    <div class="container-fluid bg-info"><h1> Containers Demo</h1></div>
+
+    <div class="container-xxl bg-warning"><h1> Containers Demo</h1></div>
+
+    
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <button type="button" class="btn btn-primary">Primary</button>
+        <button class="btn btn-primary">submit</button>
+        <button class="btn btn-primary">Button</button>
+        <button class="btn btn-primary">Button</button>
+        <button class="btn btn-primary">Button</button>
+        <button class="btn btn-primary">Button</button>
+
+        <table class="table table-striped"></table>
+
+    </div>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5 border border-3 border-primary p-4" style="width: 400 px;">
+        <h2 class="text-center">Login Form</h2>
+        <form>
+            <div class="mb-3">
+                <label for="uname" class="form-label">UserName</label>
+                <input type="text" 
+                class="form-control"
+                id="uname"
+                name="uname">
+            </div>
+
+            <div>
+                <label for="pwd" class="form-label">PassWord</label>
+                <input type="password" 
+                class="form-control"
+                id="pwd"
+                name="pwd">
+
+            </div>
+
+            <div class="mt-3 text-center">
+                <button class="btn btn-primary">Submit</button>
+                <button class="btn btn-danger">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+</head>
+<body>
+    <div class="container">
+        <div>
+        <h1 class="text-center text-capitalize bg-info">Demo Form</h1>
+        </div>
+
+        <form>
+            <div class="row">
+                <label class="col-3 form-label">Text</label>
+
+                <div class="col-9">
+                <input type="text" class="form-control" placeholder="enter some text">
+                </div>
+
+
+                <label class="col-3 form-label">Selection</label>
+
+                <div class="col-9">
+                <select class="form-select">
+                    <option>option1</option>
+                    <option>option2</option>
+                </select>
+                </div>
+            <!--</div>-->
+
+           
+            <div class="row">
+                <label class="col3" name="chk">CheckBox</label>
+                
+                <div class="col-9">
+                    <div class="form-check form-check-inline">
+
+                        <input type="checkbox" class="form-check-input" value="val1">
+                        <label class="form-check-label"></label>
+
+                    </div>
+
+
+                    <div class="form-check form-check-inline">
+
+                        <input type="checkbox" class="form-check-input" value="val2">
+                        <label class="form-check-label"></label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <label class="col-3" name="chk">options</label>
+
+                <div class="col-9">
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-primary">li1</li>
+                    <li class="list-group-item list-group-item-success">li2</li>
+                    <li class="list-group-item list-group-item-danger">li3</li>
+
+                </ul>
+                    
+
+                </div>
+            </div>
+
+            
+        </form>
+
+        
+    </div>
+    
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div class="navbar navbar-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+
+            <div class="collapse navbar-collapse" id="items">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="btn btn-info" href="#"></li>
+                    <li class="nav-item"><a class="btn btn-info" href="#"></li>
+                    <li class="nav-item"><a class="btn btn-info" href="#"></li>
+                    <li class="nav-item"><a class="btn btn-info" href="#"></li>
+
+                    
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+            .logo-img {
+                max-height: 60px;   /* adjust 60–70 */
+                width: 120px;
+             }
+
+             #main-img{
+                width:100%;
+                margin-top:5%;
+             }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-light">
+
+        <!-- Logo -->
+        <a class="navbar-brand ms-5 d-flex align-items-center py-0" href="#">
+            <img src="Mphasis-logo.png" class="logo-img">
+          </a>
+          
+        <div class="container-fluid flex-column">
+       
+        
+        <div class="w-100 d-flex justify-content-end">
+
+            <ul class="navbar-nav flex-row gap-3">
+                <li class="nav-item me-3">Our Approach</li>
+            
+
+                <li class="nav-item"><a class="nav-link" href="#">Investors</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Newsroom</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">CSR</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">ESG</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Culture</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">French</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">German</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="w-100 d-flex align-items-center mt-2">
+      
+            
+
+        </div>
+
+
+        <ul class="navbar-nav ms-auto gap-4 fw-semibold">
+            <li class="nav-item"><a class="nav-link" href="#">Our Approach</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Industries</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Innovation</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">About Mphasis</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Careers</a></li>
+          </ul>
+    
+        </div>
+
+    
+
+    </nav>
+
+
+    <div>
+        <img src="Mphasis-img.jpeg" id="main-img">
+    </div>
+
+
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container-lg bg-primary">
+        <h1>Containers demo</h1>
+    </div>
+
+    <div class="container-fluid sm-success"><h1> Containers Demo</h1></div>
+
+    <div class="container-fluid bg-danger"><h1> Containers Demo</h1></div>
+
+    <div class="container-fluid bg-info"><h1> Containers Demo</h1></div>
+
+    <div class="container-xxl bg-warning"><h1> Containers Demo</h1></div>
+
+    
+</body>
+</html>
