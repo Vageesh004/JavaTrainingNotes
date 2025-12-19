@@ -1,0 +1,683 @@
+Java Training Notes - Day 28
+
+
+
+BreadCrumbs:
+
+
+
+Java Script:
+
+let-> block scope
+
+var -> 
+
+JavaScript is a object based language - no particular primitive types like Java
+
+
+
+Angular:
+
+npx install -g @angular/cli
+
+npx ng create-app appname
+
+npx ng serve
+
+
+npx- for node
+ng - for angular
+
+
+index.html -> The main running point
+
+The <app-root> we provide is given in ts file..
+
+which will contain main logic
+
+And then there is app.html, which also we give path in index.html
+
+
+
+
+The 
+
+
+
+when we run the appln on different system, we have dependencies installed on one system.
+
+But to access on other system, we need npm init -y... it installs all the package-json code
+
+
+
+
+
+Prgm 1: 
+
+demoOnPageCrumbs.html:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand" href="demoOnBreadCrumbs.html">MyApp</a>
+    </nav>
+
+    <div class="container mt-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Home</li>
+
+
+            </ol>
+        </nav>
+
+        <h2>Welcome to MyApp,Learn something new</h2>
+
+        <a href="courses.html" class="btn btn-primary"></a>
+    </div>
+    
+</body>
+</html>
+
+
+
+courses.html:
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand" href="courses.html">MyApp</a>
+    </nav>
+
+    <div class="container mt-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Home</li>
+
+                <li class="breadcrumb-item">Courses</li>
+
+            </ol>
+        </nav>
+
+        <h2>View My Courses</h2>
+        <a href="viewcourses.html" class="btn btn-primary">Technology</a>
+
+    </div>
+    
+</body>
+</html>
+
+
+
+viewcourses.html:
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand" href="demoOnBreadCrumbs.html">MyApp</a>
+    </nav>
+
+    <div class="container mt-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="demoOnBreadCrumbs.html">Home</a></li>
+
+                <li class="breadcrumb-item"><a href="courses.html">Courses</a></li>
+                <li class="breadcrumb-item"><a href="viewcourses.html"></a>Technology</li>
+
+            </ol>
+        </nav>
+
+        <h2>View My Courses</h2>
+        <a href="java.html" class="btn btn-primary">Technology</a>
+
+    </div>
+    
+</body>
+</html>
+
+
+
+
+Program 2: Pagination
+
+
+demoOnPagination.html
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container mt-4">
+
+        <h3 class="text-primary mb3">Student List - Pag1</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>id</th>
+            </tr>
+
+            <tr>
+                <td>Vageesh</td>
+                <td>123</td>
+            </tr>
+
+            <tr>
+                <td>Vageesh</td>
+                <td>123</td>
+            </tr>
+
+            <tr>
+                <td>Vageesh</td>
+                <td>123</td>
+            </tr>
+
+            <tr>
+                <td>Vageesh</td>
+                <td>123</td>
+            </tr>
+
+            <tr>
+                <td>Vageesh</td>
+                <td>123</td>
+            </tr>
+
+            <tr><td>Vageesh</td><td>123</td></tr>
+            <tr><td>Vageesh</td><td>123</td></tr>
+            <tr><td>Vageesh</td><td>123</td></tr>
+            <tr><td>Vageesh</td><td>123</td></tr>
+            <tr><td>Vageesh</td><td>123</td></tr>
+            <tr><td>Vageesh</td><td>123</td></tr>
+            <tr><td>Vageesh</td><td>123</td></tr>
+            <tr><td>Vageesh</td><td>123</td></tr>
+            <tr><td>Vageesh</td><td>123</td></tr>
+
+
+
+        </table>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+
+                <li class="page-item disabled">
+                    <a class="page-link" href="page1.html"> prev </a>
+                </li>
+                
+
+                <li class="page-item">
+                    <a class="page-link" href="page1.html"> 1 </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page2.html"> 2 </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page3.html"> 3 </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page1.html"> next </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+</body>
+</html>
+
+
+
+pag1.html
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container mt-4">
+
+        <h3 class="text-primary mb3">Student List - Page1</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>id</th>
+            </tr>
+
+            <tr><td>Amit</td><td>123</td></tr>
+            <tr><td>Amit</td><td>123</td></tr>
+            <tr><td>Amit</td><td>123</td></tr>
+            <tr><td>Amit</td><td>123</td></tr>
+            <tr><td>Amit</td><td>123</td></tr>
+            <tr><td>Amit</td><td>123</td></tr>
+            <tr><td>Amit</td><td>123</td></tr>
+            <tr><td>Amit</td><td>123</td></tr>
+            
+
+
+        </table>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="demOnPagination.html"> prev </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page1.html"> 1 </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page2.html"> 2 </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page3.html"> 3 </a>
+                </li>
+
+                
+                <li class="page-item">
+                    <a class="page-link" href="page2.html"> next </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+</body>
+</html>
+
+
+
+Pag2.html:
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container mt-4">
+
+        <h3 class="text-primary mb3">Student List - Page1</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>id</th>
+            </tr>
+
+            <tr><td>Suraj</td><td>123</td></tr>
+            <tr><td>Suraj</td><td>123</td></tr>
+            <tr><td>Suraj</td><td>123</td></tr>
+            <tr><td>Suraj</td><td>123</td></tr>
+            <tr><td>Suraj</td><td>123</td></tr>
+            <tr><td>Suraj</td><td>123</td></tr>
+            <tr><td>Suraj</td><td>123</td></tr>
+            
+            
+
+
+        </table>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="page1.html"> prev</a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page1.html"> 1 </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page2.html"> 2 </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page3.html"> 3 </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page3.html"> next </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+</body>
+</html>
+
+
+
+Page3.html
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container mt-4">
+
+        <h3 class="text-primary mb3">Student List - Page1</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>id</th>
+            </tr>
+
+            <tr><td>Priya</td><td>123</td></tr>
+            <tr><td>Priya</td><td>123</td></tr>
+            <tr><td>Priya</td><td>123</td></tr>
+            <tr><td>Priya</td><td>123</td></tr>
+            <tr><td>Priya</td><td>123</td></tr>
+            <tr><td>Priya</td><td>123</td></tr>
+            <tr><td>Priya</td><td>123</td></tr>
+           
+            
+
+
+        </table>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+                
+
+                <li class="page-item">
+                    <a class="page-link" href="page2.html"> prev </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page1.html"> 1 </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page2.html"> 2 </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="page3.html"> 3 </a>
+                </li>
+
+                <li class="page-item disabled">
+                    <a class="page-link" href="page3.html"> next </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+</body>
+</html>
+
+
+
+Script prgms:
+
+
+1. loginForm_BS.html:
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5 border border-3 border-primary p-4" style="width: 400 px;">
+        <h2 class="text-center">Login Form</h2>
+        <form>
+            <div class="mb-3">
+                <label for="uname" class="form-label">UserName</label>
+                <input type="text" 
+                class="form-control"
+                id="uname"
+                name="uname">
+            </div>
+
+            <div>
+                <label for="pwd" class="form-label">PassWord</label>
+                <input type="password" 
+                class="form-control"
+                id="pwd"
+                name="pwd">
+
+            </div>
+
+            <div class="mt-3 text-center">
+                <button class="btn btn-primary" onclick="login()">Submit</button>
+                <button class="btn btn-danger" type="">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const login=()=>{
+            event.preventDefault();
+            let uname=document.getElementById("uname").value;
+            let pwd=document.getElementById("pwd").value;
+
+            console.log(uname+ " "+ pwd);
+
+            if(uname=="vageesh" && pwd=="vageesh")
+            console.log("login successful");
+
+            else
+            console.log("invalid credentials");
+
+        }
+    </script>
+</body>
+</html>
+
+
+
+2. formsDemo.html
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="formData.js"></script>
+</head>
+<body>
+    <h1>Registration Form</h1>
+    <form>
+    </form>
+        <!--<label for="uid">UserId:</label>
+        <input type="number" id="uid" name="uid"> <br>
+
+        <label for="uname">UserName:</label>
+        <input type="text" id="uname" name="uname"> <br>
+
+        <label for="pwd">Password:</label>
+        <input type="password" id="pwd" name="pwd"> <br>
+
+
+        <label for="cpwd">Confirm Password:</label>
+        <input type="text" id="cpwd" name="cpwd"> <br>
+
+        <label for="mobile">Password:</label>
+        <input type="tel" id="mobile" name="mobile"> <br>
+
+        <label for="email">email:</label>
+        <input type="email" id="email" name="email"> <br>
+
+        
+        <label for="dob">:</label>
+        <input type="date" id="dob" name="dob"> <br> -->
+
+        
+
+        <!--<label for="gen">Gender:</label>
+
+        Female<input type="radio" id="gen" name="gen" value="Female">
+        Male<input type="radio" id="gen" name="gen" value="Male"> <br>-->
+
+
+        <!--<label for="skill">SkillSet</label>
+
+        Java<input type="checkbox" id="skill" name="skill" value="Java">
+        Spring<input type="checkbox" id="skill" name="skill" value="Spring">
+
+        Kafka<input type="checkbox" id="skill" name="skill" value="Kafka"> -->
+
+        <label for="qual">Qualification</label> <br>
+
+        <select id="qual">
+            <option value="M.Tech">M.Tech</option>
+            <option value="M.C.A">M.C.A</option>
+
+            <option value="">B.Tech</option>
+            <option value="">B.Sc</option>
+
+        </select> <br>
+
+        <select name="like" multiple>
+            <optgroup label="Vegeterian">
+                <option>Paneer</option>
+                <option>Brinjal</option>
+                <option>Aloo</option>
+            </optgroup>
+
+
+            <optgroup label="Non -Vegeterian">
+                <option>Chicken</option>
+                <option>Mutton</option>
+                <option>Fish</option>
+            </optgroup>
+
+
+        </select>
+
+        <label for="addr">Address</label>
+        <textarea id="addr" name="addr" rows="5" cols="25"></textarea> <br>
+
+       <!-- <label for="photo">Photo</label>
+        <input type="file" id="photo" name="photo"> <br>
+
+
+        
+        <label for="resume">Resume</label>
+        <input type="file" id="resume" name="resume" accept=".pdf,.docx"> <br> -->
+
+
+        
+        <input type="submit" value="submit" accesskey="s" onclick="signup()"> 
+
+
+
+
+    </form>
+</body>
+</html>
+
+
+formData.js
+
+
+function signup(){
+    event.preventDefault();
+
+    /*let uid=document.getElementById("uid").value;
+    let uname=document.getElementById("uname").value;
+
+    let pwd=document.getElementById("pwd").value;
+    let cpwd=document.getElementById("cpwd").value;
+
+    let mobile=document.getElementById("mobile").value;
+    let email=document.getElementById("email").value;
+
+    let dob=document.getElementById("dob").value;*/
+
+    //let gender=document.getElementById("gen").value;
+
+    //let gender=document.querySelector('input[name="gen"]:checked');
+
+    //console.log(gender.value);
+
+    //console.log(uid+ "\n"+ uname + "\n" + pwd + "\n" + cpwd + "\n" + mobile + "\n" + email + "\n" +dob + "\n" + gender);
+
+
+    //let skills=document.querySelectorAll('input[name="skill"]:checked');
+  
+
+    /*skills.forEach(element =>{
+        console.log(element.value);
+    });*/
+
+    let degree=document.getElementById("qual").value;
+    console.log(degree);
+
+    let food=document.getElementById("like").value;
+    console.log(food);
+
+    let addr=document.getElementById("addr").value;
+    console.log(addr);
+
+    //let photo=document.getElementById("photo").value;
+    //console.log(photo);
+
+    //let resume=document.getElementById("resume").value;
+    //console.log(resume);
+}
+
+
+
+
+
+
+
+
+
