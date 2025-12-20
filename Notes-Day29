@@ -1,0 +1,203 @@
+Java Training - Notes Day 29
+
+
+
+npm install typescript
+
+npm init -y ----> package.json
+
+npx tsc --init --> tsconfig.json  ----> before this one also the appln runs
+
+
+Then, give  npx tsc hello.ts
+
+Then js file also gets created and compiled
+
+
+Then give npx node hello.js
+
+
+
+Instead of 2 commands, give one command
+
+npx tsx hello.ts
+
+
+
+Then, for nodemon ,
+
+
+Arrays and Tuples:
+
+
+
+
+
+Commands:
+
+
+npm install typescript
+
+npm init -y ----> package.json
+
+npx tsc --init --> tsconfig.json  ----> before this one also the appln runs
+
+Then, give  npx tsc hello.ts
+
+
+
+   For Nodemon:
+
+
+   npm install -g nodemon
+
+
+   npx nodemon -exec npx tsx arrays.ts
+
+
+   
+
+   Then, npm i -D nodemon tsx
+
+  -D means development env
+
+
+ Then, in package.json, under the scripts: we are giving "run": "nodemon --exec npx tsx".... 
+For this, execution command in terminal is npx run <filename> 
+
+If not run and we use start, 
+
+"start": nodemon --exec npx tsx
+
+
+npm start <filename>
+
+
+
+Then watch mode also there... to watch , like debug mode
+
+
+For continous execution of the application, we need nodemon... Like DevTools of SpringBoot
+
+
+
+TypeScript:
+
+
+npm install -g typescript
+
+
+
+Enums run command:
+
+npx run file.ts
+
+
+
+
+Angular:
+
+
+Components:
+
+For compoenets, install angular extension service
+
+
+
+One-way binding
+
+Two-way binding
+
+
+
+In Angular, we use class components, there in React, we used functional components
+
+
+
+Property Binding -> ()
+
+event binding
+
+myModel 
+
+twoway binding
+
+
+Both Event and Property binding are one-way binding
+
+
+The Angular and React both are SPA.. no reloading, only rendering??
+
+
+
+
+
+
+
+
+
+Prgm 1:
+
+let - block scope
+
+
+Prgm 2:
+
+User Defined class
+
+2 methods: Constructor without parameters and constructor with parameters
+
+
+we can use any one constructor only in the prgm...we can't use both at a time..
+
+Like Java JVM we can't us like this here...
+
+
+
+
+
+Prgm 1:
+
+
+demoOnTuples.ts
+
+
+let person:[number,string]=[123,"amit"];
+
+let personss:[number,string][]=[[234,"swapna"],[567,"keerthi"],[456,"vikky"]];
+
+console.log(person)
+console.log(personss)
+
+let arr=new Array<number>(5).fill(0)
+
+let student={
+    name:"ajay",id:345
+}
+//let mynums:[56,78] as const
+let mynums=Object.freeze ([12,34])
+let mynumsarr:number []=[12,345,567]
+
+console.log(mynumsarr)
+console.log(mynums)
+
+
+
+Prgm 2:
+
+dem
+
+
+
+
+Afternoon:
+
+One-way binding
+
+Two-way binding
+
+
+One-way: html to forms or reverse
+
+Two-way: through NgModel, forms module
+
