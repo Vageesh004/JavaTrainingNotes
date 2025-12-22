@@ -1,0 +1,59 @@
+Java Training - Notes Day 30
+
+
+In index.html , we can add cdn <link tag for bootstrap..
+
+In styles.css also, we can add it...no prblm
+
+
+
+
+standalone: true... it means the application is standalone
+
+Before Angular 14, the Ng_Module was there... standalone is there from Angular 14 only
+
+
+
+
+
+
+
+
+Morning:
+
+Before break
+
+1.Directives- one new app - one component
+
+2.Another component or prgm on ngIf
+
+3.ngSwitch example
+
+4. ngSwitch calci example
+
+
+
+After break
+
+5. ngFor example
+
+6. ngFor student component exammple
+
+
+7. login , password - ngclass example
+
+
+
+Afternoon:
+
+8. directive and component prgm...onclickBoldDirective
+
+some 2 more examples like that
+
+
+
+9. A new Employee Angular Application...
+
+AddEmp.html... then, forms in that
+
+---> Add validations in that too... using @If, 'required' and all
