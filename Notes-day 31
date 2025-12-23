@@ -1,0 +1,79 @@
+Java Training Notes- Day 31
+
+
+Angular:
+
+
+Prgm 1:
+
+Employee
+
+
+Question:
+
+header
+
+Navbar.. navbrand- 
+
+
+AddEmp,About, search
+
+
+Then, list comp
+
+
+footer - contact
+
+
+
+
+Jason server concept:
+
+In package-json, add    "json":"json-server --watch db.json --port 4000"  this line..
+
+
+Then, create db.json in employee-management itself...
+
+
+here, again after that, create another terminal, and run npm run json
+
+
+one terminal is client machine here...another is server machine here
+
+
+
+client machine or application we can say it..
+
+
+something, subscribe method they are adding to make sure, the logic works, the list gets displayed
+
+
+
+
+For deletion in json,add delete method in emplist.ts
+
+
+
+something-- id, eid mam told in json file??
+
+
+
+
+
+
+
+
+Today's prgms:
+
+1. Employee-management la emp-list, emp-info compoenent...
+
+then, emptable with info, about,delete buttons
+
+
+
+
+
+Morning:
+
+Prgm 1:
+ 
