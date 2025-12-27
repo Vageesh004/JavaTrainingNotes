@@ -1,0 +1,368 @@
+Notes - Day 34
+
+
+Cloud Fundamentals:
+
+
+
+Video 1:
+
+What is Cloud Computing:
+
+According to NIST(National Institute of Standard Technology),
+
+
+Cloud Computing is a model for providing convenient, on-demand network access to a shared pool of configurable resources such as networks,servers,storage, servers,application
+
+that can be rapidly provided or released with minimal management effort or service provider interaction.
+
+
+
+
+Two main concepts:
+
+1.Abstraction:
+
+Process in which specific details are hidden to simplify or generalize something
+
+
+2. Virtualization:
+
+Process in which software manages hardware resources of physical hosts so resources can be utilized more efficiently by multiplied virtual guest systsems
+
+
+
+Three cloud layers:
+
+Infrastrucure cloud: Abstracts applications from servers and servers from storage
+
+
+Content cloud: Abstracts data from Applications
+
+Information cloud: Abstracts access from clients to  data
+
+
+
+Cloud Terminologies:
+
+
+On-Premise:
+
+On the premise of the controlled IT Environment.. Alternative to cloud based
+
+
+
+Cloud consumer:
+Cloud provider:
+
+
+Cloud Service:
+
+Cloud service consumer:
+
+
+
+
+
+
+
+Scaling:
+
+Horizontal:
+
+Common form of Scaling in cloud environments
+
+
+Allocation IT Resources of same type- scaling out
+
+Releasing IT Resources of same type - scaling In
+
+
+Vertical:
+
+
+Cloud characteristics:
+
+- Elasticity
+- On-Demand
+
+-Provider-pooled computing resources
+
+-Metered service usage
+
+-Broad Network access
+
+
+
+Elasticity:
+Rapid adding or removing of resources
+
+
+
+Metered service usage:
+
+Subscription free plus fee as per usage
+
+
+Broad Network access:
+
+Cloud services can be accessed from any type of device
+
+Mobile, Laptop, any other etc.
+
+
+
+Cloud Deployment Model:
+
+-Owned by Single Organization
+
+-can be located on or off site
+
+
+
+
+Public cloud
+Private
+
+Community
+Hybrid
+
+
+
+SaaS service model challenges:
+
+
+1.Disparate location
+
+2. Multitenancy - no customization
+
+On Same server,everything runs?? 
+
+3.Security - no 
+
+
+
+PaaS: 
+
+Heroku
+
+Google App Engine
+
+
+
+
+IaaS:
+
+provides basic things like storage,networking,operating system etc.
+
+
+
+CaaS:
+
+BPaaS:
+
+Security:
+
+Integration:
+
+Testing:
+
+
+
+
+
+
+
+-------Lecture 2--------------
+
+
+Transition from SOA to Cloud:
+
+
+SOA is a method of software design that produces set of services that are loosely coupled and accessible from different applications in separate business domains
+
+
+
+Like SOA, Cloud computing is also service-oriented
+
+
+It is like Hyperlevel SOA..It operates same way as SOA
+
+
+Major difference is cloud computing require service level agreements
+
+
+
+
+SLA:
+
+-They are like contract between end users and cloud service providers
+
+
+
+
+Cloud computing Key Enabling Technologies:
+
+-Cloud Datacenters
+
+-Virtualization
+
+-Cloud APIs
+
+-Cloud Storage
+
+-Cloud Database  : Cloud computing is not suited well with Relational Databases.
+They are suited well with non-relational databases.
+
+
+Bcoz scalability relability not there with this. But with non-relational scalability is there
+
+
+
+Virtualization: Multiple OS run on same system
+
+
+
+Common Implementation Obstacles:
+
+
+1.Technical Obstacles to Adoption
+
+2.Technical Obstacles to Growth
+
+3. Policy and business obstacles
+
+
+
+
+Technical Obstacles to Adoption:
+
+--> Availability of a service
+
+--->Data confidentiality and audability
+
+-->Lock-in
+
+
+
+
+
+
+
+
+
+
+
+Sir's points:
+
+It is Pay-as-you-go service
+
+
+It can be looked from different perspectives,tester perspectives etc.
+
+
+
+Abstraction:
+
+One command is used...for connecting to windows server, Linux server etc. like that
+
+
+
+
+
+Virtualization:
+
+Multiple virtual machines can be installed in one physical machine...The utilization is improved by 70% .
+
+The cost is saved.. We have softwareized the server---> most imp point
+
+
+
+We can create a virtual pool like that.
+
+
+
+
+Scaling: Suppose, offers are there in Flipkart, Amazon... that day the server will be busy...
+
+If example 100 servers only there na..it will be tough..so, 1000 will be good
+on the other day, 100 only enough...
+
+so if we use 1000,900 will be wasted
+
+
+So,that is the reason we use scaling..
+
+Horizontal only we use mostly..
+
+Application servers support that horizontal scaling
+
+
+Database servers does not support Ig..
+
+Vertical scaling it does??
+
+
+
+Elasticity: We use till we use and return back the unused one like that....
+
+Apache Spark
+
+S3,Hadoop,Dynamo DB
+
+
+
+
+
+---------Lecture  2-----------
+
+
+Cloud APIs: 
+
+
+Cloud DataCenters:
+
+
+
+Virtualization:
+
+
+
+Common Implemenetation Obstacles:
+
+
+Amazon used Oracle Servers even if had DynamoDB and all
+
+
+
+
+
+
+
+Chatgpt notes:
+
+
+Virtualization:
+
+Multiple OS runs on same physical machine by abstracting hardware resources
+
+Hypervisor runs in between OS and hardware
+
+
+It divides CPU,Memory,Network resources, storage
+
+Each VM runs its own OS independently
+
+
+
+Cloud APIs:
+
+APIs used to connect users with the cloud APIs
+
+
+
+
+
+
+
+
